@@ -1,0 +1,13 @@
+{
+  "name" : "haraldutil",
+  "description" : "Utility functions for the global scope",
+  "version" : "0.0.1",
+  "author" : "Harald Rudell <harald@allgoodapps.com>",
+  "private" : "true",
+  "repository" : {
+    "type" : "private git",
+    "url" : "git:haraldutil"
+  },
+  "engines" : ["node >= 0.3.6"],
+  "main" : "./util"
+}
