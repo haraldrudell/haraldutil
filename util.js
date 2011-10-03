@@ -5,7 +5,8 @@
 module.exports.logException = logException
 module.exports.checkSuccess = checkSuccess
 module.exports.logError = logError
-module.exports.getLocation= getLocation
+module.exports.getLocation = getLocation
+module.exports.timestamp = require('./timestamp')
 
 // log exception e caught in a catch construct
 // heading: optional heading string, eg. 'reading file'
