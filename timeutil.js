@@ -24,7 +24,7 @@ function getDate(timestamp) {
 function getDateString(timestamp, timezoneMinutesOffUtc, modifier) {
   
   if (timezoneMinutesOffUtc == null) {
-    timezoneMinutesOffUtc = -Date().getTimezoneOffset()
+    timezoneMinutesOffUtc = -new Date().getTimezoneOffset()
   }
 
   // date and time part
