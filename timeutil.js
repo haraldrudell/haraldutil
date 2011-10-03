@@ -29,7 +29,7 @@ function getDateString(timestamp, timezoneMinutesOffUtc, modifier) {
   // date and time part
   // eg ET when 0:00 in London, 20:00 the day before in NY
   // toISOString: 2011-09-30T23:21:01.721Z
-  var startIndex = onlyHourMinute ? 11 : 0
+  var startIndex = modifier > 0 ? 11 : 0
   var result = getDate(timestamp + (timezoneMinutesOffUtc || 0) * 60)
     .toISOString().substring(startIndex, 16)
 
