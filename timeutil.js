@@ -5,6 +5,7 @@
 module.exports.getTimestamp = getTimestamp
 module.exports.getDate = getDate
 module.exports.getDateString = getDateString
+module.exports.encodeTimeNumber = encodeTimeNumber
 
 // convert Date to a unix timestamp number
 function getTimestamp(date) {
@@ -55,5 +56,16 @@ function getTwoDigits(number) {
   if (result.length < 2) {
       result = '0' + result
   }
+  return result
+}
+
+// hour, minute: base time
+// tzOffset: offset from base location in minutes for result
+// if base is in utc timezone and tzOffset is -240, result will be in eastern time
+function encodeTimeNumber(hour, minute, tzOffset) {
+  // calculate time in zulu
+  var result = (hour * 60 + minute) + (tzOffset || 0)
+  // 1440 corresponds to 24 hours
+  if (result < 0 || result >= 1440) result = ((result % 1440) + 1440) % 1440
   return result
 }
