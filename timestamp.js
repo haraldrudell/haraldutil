@@ -21,6 +21,10 @@ function getDate(timestamp) {
 // timezoneMinutesOffUtc: negative west of London, -240 for NY
 // onlyHourMinute: true: skip date part
 function getDateString(timestamp, timezoneMinutesOffUtc, onlyHourMinute) {
+  
+  if (timezoneMinutesOffUtc == null) {
+    timezoneMinutesOffUtc = Date.getTimezoneOffset()
+  }
 
   // date and time part
   // eg ET when 0:00 in London, 20:00 the day before in NY
