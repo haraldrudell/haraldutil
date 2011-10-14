@@ -8,3 +8,36 @@ console.log('getDateString:',
   timeUtil.getDateString(timestamp, -420, true))
 console.log('expected:      2011-10-03T12:42-04 2011-10-03T16:42Z 09:42-07')
 
+console.log('5,50:',
+	testa(' 5 ', 5),
+	testa(' 50 ', 50),
+	testa(50, 50),
+	testa(Object(50), 50),
+	testa(Object(' 50 '), 50))
+console.log('Nan:',
+	testa(' 5 0 ', NaN),
+	testa('50x', NaN),
+	testa('5.0', NaN),
+	testa(true, NaN),
+	testa(null, NaN),
+	testa(undefined, NaN),
+	testa(({}), NaN),
+	testa('', NaN))
+
+function testa(input, expected) {
+	var result = ''
+	var value = haraldutil.toNumber(input)
+	if (value === expected || (isNaN(value) && isNaN(expected))) {
+		result += 'ok'
+	} else {
+		result += 'input:' + typeof input + ':(' + input + ')'
+		result += 'result:' + typeof value + ':' + value
+	}
+	return result
+}
+
+var f1 = 5
+var f2 = Object(5)
+console.log('typeof value:', typeof f1, typeof f2)
+console.log('typeof', typeof f1 == 'number', typeof f2 == 'number')
+console.log('instanceof', f1 instanceof Number, f2  instanceof Number)
