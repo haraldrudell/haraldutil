@@ -105,23 +105,28 @@ function toNumber(str, allowFloat) {
 // str: string
 // return value: true if number syntx is ok
 function isNumberSyntaxOk(str, allowFloat) {
-	var result = str.length > 0
+	var result = str.length > 0 // empty string not ok
 	var sawDecimalPoint = false
 
 	for (var index in str) {
-		var value = "0123456789.".indexOf(str.charAt(index))
-		if (value == -1) {
-			result = false
-			break
+		var value = "0123456789.-+".indexOf(str.charAt(index))
+
+		// digit: ok
+		if (value >= 0 && value < 10) continue
+
+		// one decimal point: ok if float
+		if (value == 10 && allowFloat && !sawDecimalPoint) {
+			sawDecimalPoint = true
+			continue
 		}
-		if (value == 10) {
-			if (allowFloat && !sawDecimalPoint) {
-				sawDecimalPoint = true
-				continue
-			}
-			result = false
-			break
-		}
+
+		// leading plus or minus: ok
+		if ((value == 11 || value == 12) && index == 0) continue
+
+		// bad character
+		result = false
+		break
 	}
+
 	return result
 }
