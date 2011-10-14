@@ -78,41 +78,50 @@ function getLocation(includeObject, offset) {
 // parse a number consisiting of digits 0-9
 // leading and trailing whitespace and line terminators are allowed
 // bad numbers return NaN
-function toNumber(str) {
+function toNumber(str, allowFloat) {
 	var result = NaN
 	if (str instanceof String) {
+		// convert object string to primitive string
 		str = String(str)
 	}
 	if (typeof str == 'string') {
-		var start = 0
-		var end = str.length
 
-		// skip leading and trailing whitespace
-		var whiteSpaceAndLineTerminator = "\u0009\u000b\u000c\u0020\u00a0\ufeff\u000a\u000d\u2028\u2029"
-		while (start < end) {
-			if (whiteSpaceAndLineTerminator.indexOf(str.charAt(start)) == -1) break
-			start++
-		}
-		while (start < end) {
-			if (whiteSpaceAndLineTerminator.indexOf(str.charAt(end - 1)) == -1) break
-			end--
-		}
+		// skip leading and trailing whiteSpace and lineTerminator
+		var digits = str.trim()
 
-		// parse the number
-		var digits = "0123456789"
-		while (start < end) {
-			var value = digits.indexOf(str.charAt(start))
-			if (value == -1) {
-				result = NaN
-				break
-			}
-			result = (isNaN(result) ? 0 : result * 10) + value
-			start++
+		if (isNumberSyntaxOk(digits, allowFloat)) {
+			result = allowFloat ? parseFloat(digits) : parseInt(digits)
 		}
 	} else if (typeof str == 'number') {
 		result = str
 	} else if (str instanceof Number) {
+		// convert object number to primitive number
 		result = Number(str)
+	}
+	return result
+}
+
+// check syntax: only digits allowed, one possible decimal point
+// str: string
+// return value: true if number syntx is ok
+function isNumberSyntaxOk(str, allowFloat) {
+	var result = str.length > 0
+	var sawDecimalPoint = false
+
+	for (var index in str) {
+		var value = "0123456789.".indexOf(str.charAt(index))
+		if (value == -1) {
+			result = false
+			break
+		}
+		if (value == 10) {
+			if (allowFloat && !sawDecimalPoint) {
+				sawDecimalPoint = true
+				continue
+			}
+			result = false
+			break
+		}
 	}
 	return result
 }
