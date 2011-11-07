@@ -33,7 +33,7 @@ function getDateString(timestamp, timezoneMinutesOffUtc, modifier) {
 	// toISOString: 2011-09-30T23:21:01.721Z
 	var startIndex = modifier > 0 ? 11 : 0
 	var result = getDate(timestamp + (timezoneMinutesOffUtc || 0) * 60)
-		.toISOString().substring(startIndex, 16)
+		.toISOString().substring(startIndex, modifier != 3 ? 16 : 19)
 
 	// timezone suffix: Z, -04, +0630
 	if (modifier != 2) {
