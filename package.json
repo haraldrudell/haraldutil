@@ -12,7 +12,7 @@
 	"private": true,
 	"repository" : {
 		"type" : "private git",
-		"url" : "gt:haraldutil"
+		"url" : "git+ssh://gt:haraldutil"
 	},
 	"main" : "./util"
 }
