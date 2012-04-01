@@ -1,7 +1,7 @@
 {
 	"name" : "haraldutil",
 	"description" : "Utility functions for the global scope",
-	"version" : "0.0.2",
+	"version" : "0.0.3",
 	"contributors": [
 		{
 			"name": "Harald Rudell",

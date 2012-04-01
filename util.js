@@ -63,10 +63,15 @@ function getLocation(includeObject, offset) {
 	var e = new Error()
 	var frames = e.stack.split('\n')
 	var line = frames[2 + offset]
+	// in main:     at Object.<anonymous> (/home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mongotest.js:10:2)
+	// in function:     at run (/home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mongotest.js:22:2)
+	// in emit callback:     at /home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mongotest.js:32:3
+
 	var file = line.lastIndexOf('/')
 	var lastcolon = line.lastIndexOf(')')
+	if (lastcolon == -1) lastcolon = line.length + 1
 	result += line.substring(file + 1, lastcolon)
-	if (includeObject) {
+	if (includeObject && line.charAt(line.length - 1) == ')') {
 		var at = line.indexOf('at ')
 		var open = line.lastIndexOf(' (')
 		result += '-' + line.substring(at + 3, open)
