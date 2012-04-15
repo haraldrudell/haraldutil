@@ -1,7 +1,7 @@
 {
 	"name" : "haraldutil",
 	"description" : "Utility functions for the global scope",
-	"version" : "0.0.3",
+	"version" : "0.0.4",
 	"contributors": [
 		{
 			"name": "Harald Rudell",
@@ -9,10 +9,9 @@
 			"web": "http://blog.haraldrudell.com"
 		}
 	],
-	"private": true,
 	"repository" : {
-		"type" : "private git",
-		"url" : "git+ssh://gt:haraldutil"
+		"type" : "git",
+		"url" : "https://haraldrudell@github.com/haraldrudell/haraldutil.git"
 	},
 	"main" : "./util"
 }
