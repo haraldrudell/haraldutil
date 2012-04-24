@@ -1,7 +1,8 @@
 {
 	"name" : "haraldutil",
 	"description" : "Utility functions for the global scope",
-	"version" : "0.0.4",
+	"author": "Harald Rudell <harald@allgoodapps.com>",
+	"version" : "0.0.5",
 	"contributors": [
 		{
 			"name": "Harald Rudell",
