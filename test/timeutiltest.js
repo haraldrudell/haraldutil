@@ -1,7 +1,7 @@
 // timeutiltest.js
 // test used with nodeutil
 
-var haraldutil = require('../lib/util.js')
+var haraldutil = require('../lib/haraldutil')
 var doTest = require('../lib/dotest').doTest
 
 module.exports = {

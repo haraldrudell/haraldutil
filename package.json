@@ -2,7 +2,7 @@
 	"name" : "haraldutil",
 	"description" : "Utility functions for the global scope",
 	"author": "Harald Rudell <harald@allgoodapps.com>",
-	"version" : "0.0.5",
+	"version" : "0.0.6",
 	"contributors": [
 		{
 			"name": "Harald Rudell",
@@ -14,5 +14,5 @@
 		"type" : "git",
 		"url" : "https://haraldrudell@github.com/haraldrudell/haraldutil.git"
 	},
-	"main" : "./lib/util"
+	"main" : "./lib/haraldutil"
 }
