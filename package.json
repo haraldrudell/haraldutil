@@ -14,5 +14,5 @@
 		"type" : "git",
 		"url" : "https://haraldrudell@github.com/haraldrudell/haraldutil.git"
 	},
-	"main" : "./util"
+	"main" : "./lib/util"
 }
