@@ -3,6 +3,7 @@
 	"description" : "Utility functions for the global scope",
 	"author": "Harald Rudell <harald@allgoodapps.com>",
 	"version" : "0.0.6",
+	"keywords": ["timestamp", "error", "inspect", "file", "type"],
 	"contributors": [
 		{
 			"name": "Harald Rudell",
