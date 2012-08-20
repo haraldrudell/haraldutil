@@ -1,19 +1,29 @@
 {
 	"name" : "haraldutil",
-	"description" : "Utility functions for the global scope",
-	"author": "Harald Rudell <harald@allgoodapps.com>",
-	"version" : "0.0.6",
+	"description" : "Utility functions for the global scope by Harald Rudell",
+	"author": "Harald Rudell <harald@allgoodapps.com> (http://www.haraldrudell.com)",
+	"version" : "0.0.7",
 	"keywords": ["timestamp", "error", "inspect", "file", "type"],
 	"contributors": [
 		{
 			"name": "Harald Rudell",
 			"email": "harald@allgoodapps.com",
-			"web": "http://blog.haraldrudell.com"
+			"web": "http://www.haraldrudell.com"
 		}
 	],
+	"devDependencies": {
+		"nodeunit": "",
+		"uglify-js": "",
+		"greatjson": ""
+	},
+	"dependencies": {
+	},
 	"repository" : {
 		"type" : "git",
 		"url" : "https://haraldrudell@github.com/haraldrudell/haraldutil.git"
+	},
+	"scripts": {
+		"test": "nodeunit test"
 	},
 	"main" : "./lib/haraldutil"
 }

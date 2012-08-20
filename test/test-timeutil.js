@@ -1,15 +1,10 @@
-// timeutiltest.js
+// test-timeutil.js
 // test used with nodeutil
 
 var haraldutil = require('../lib/haraldutil')
 var doTest = require('../lib/dotest').doTest
 
-module.exports = {
-	testGetDateString: testGetDateString,
-	testToNumber: testToNumber,
-}
-
-function testGetDateString(test) {
+exports.testGetDateString = function (test) {
 	var func = arguments.callee.toString().substring(9, arguments.callee.toString().indexOf('(')) || 'anonymous'
 	var timestamp = 1317660120
 	var tests = {
@@ -26,7 +21,7 @@ function testGetDateString(test) {
 	test.done()
 }
 
-function testToNumber(test) {
+exports.testToNumber = function (test) {
 	var func = arguments.callee.toString().substring(9, arguments.callee.toString().indexOf('(')) || 'anonymous'
 	var tests = {
 		1: { str: '5,50:', expected: 'NaN'},

@@ -1,99 +1,124 @@
 # haraldutil
-Utility functions for time, errors, numbers and more
+Utility functions for time, errors, numbers and more.
 
 # Reference
 
+### inspect(v, optsArg)
+return value: printable string
+
+* opts: optional object
+* .maxString: optional number: max string characters to print, default 40
+* .maxProperties: optional number: max properties to print, default 10
+* .maxLevels: optional number: max levels of objects and arrays to print, default 2
+* .nonEnum: optional boolean, default false: printing of non-enumerable object properties
+* .noArrayLength: optional boolean, default false: do not print array length
+
+### inspectAll(v)
+provide unique all-encompassing string describing v value and type.
+
+### inspectDeep(v)
+provide unique all-encompassing string describing v value and type, but do not print non-enumerable object properties.
+
 ### merge(o1, o2, ...)
-// create an object constructed using the enumerable properties of all provided arguments
-// same name properties from later objects overwrite
-// return value: Object object with only enumerable properties
+Create an object constructed using the enumerable properties of all provided arguments.
+
+* same name properties from later objects overwrite
+* return value: Object object with only enumerable properties
 
 ### browseTo(url)
-Opens the system default browser, or a new tab in the active browser window displaying url
+Opens the system default browser, or a new tab in the active browser window displaying the location url.
 
 ### getType(path1)
-// determine what path1 is
-// return value:
-// undefined: does not exist
-// false: is a directory
-// true: is a file
+Determine what path1 is.
+
+return value:
+
+* undefined: path1 does not exist
+* false: path1 is a directory
+* true: path1 is a file
 
 ### logException(e, heading, printmethod, offset)
-// log exception e caught in a catch construct
-// heading: optional heading string, eg. 'reading file'
-// printmethod: mnethod to use for output, default: console.log
-// offset possible call stack offset, default callers location
+Log detauils about an exception.
+
+* heading: optional heading string, eg. 'reading file'
+* printmethod: method to use for output, default: console.log
+* Offset possible call stack offset, default callers location
 
 ### checkSuccess(error, heading, printmethod, offset)
-// check success in a callback
-// error: callback error argument
-// heading: optional heading string, eg. 'reading file'
-// printmethod: method to use for output, default: console.log
-// offset possible call stack offset, default callers location
-// return value: true if there was no error
+Checks for success outcome in a callback
+
+* error: callback error argument
+* heading: optional heading string, eg. 'reading file'
+* printmethod: method to use for output, default: console.log
+* offset possible call stack offset, default callers location
+* return value: true if there was no error
 
 ### logError(e, heading, printmethod, offset)
-// log an error
-// e: error value, such as an Error object or catch argument
-// heading: optional heading string, eg. 'reading file'
-// printmethod: mnethod to use for output, default: console.log
-// offset possible call stack offset, default callers location
+Outputs an error to the log.
+
+* e: error value, such as an Error object or catch argument
+* heading: optional heading string, eg. 'reading file'
+* printmethod: mnethod to use for output, default: console.log
+* offset possible call stack offset, default callers location
 
 ### getLocation(includeObject, offset)
-// get the current script executing location
-// includeObject: prepend object and method, eg. Module.load
-// offset: caller offset in the stack
-// return value: printable string eg. 'tracker.js:5:15-Object.<anonymous>'
+Gets the current script executing location as a string.
+
+* includeObject: prepend object and method, eg. Module.load
+* offset: caller offset in the stack
+* return value: printable string eg. 'file:tracker.js:5:15 function:Object.<anonymous> folder:/home/folder'
 
 ### eToString(err)
 Converts an Error object to string including
+
 * Error type and message
 * Stack trace
-* Any hidden or enumerable property
+* Any hidden or enumerable properties
+
 Values other than Error objects are converted to string
 
 ### toNumber(str, allowFloat)
-// parse numbers, NaN if trailing non-numeric characters
-// str: string: format: [+-]0-9..[.0-9..]
-// allowFloat: optional boolean: allow decimal part, default no
-// leading and trailing whitespace and line terminators are allowed
-// bad numbers return NaN
+parse numbers, NaN if trailing non-numeric characters
+
+* str: string: format: [+-]0-9..[.0-9..]
+* allowFloat: optional boolean: allow decimal part, default no
+* leading and trailing whitespace and line terminators are allowed
+* unparseable numbers return NaN
+
+This function is similar to parseFloat, but does not accept trailing garbage characters.
 
 ### getTimestamp(date)
-// convert Date to a unix timestamp number
-// date: optional Date, default now
+convert Date to a unix timestamp number.
+
+* date: optional Date, default now
 
 ### getDate(timestamp)
-// convert a unix timestamp number to Date
-// timestamp: number: Unix epoch
-// return value: Date object
+convert a unix timestamp number to Date.
+
+* timestamp: number: Unix epoch
+* return value: Date object
 
 ### getDateString(timestamp, timezoneMinutesOffUtc, modifier)
-// convert unix timestamp to string
-// '2011-09-30T23:21-0400'
-// timestamp: optional number: unix timestamp, default: now
-// timezoneMinutesOffUtc: optional number: minutes off utc, negative west of London, -240 for NY
-// modifier: optional number: 1: skip date part, 2: skip date and timezone
+Convert unix timestamp to string like '2011-09-30T23:21-0400'
+
+* timestamp: optional number: unix timestamp, default: now
+* timezoneMinutesOffUtc: optional number: minutes off utc, negative west of London, -240 for NY
+* modifier: optional number: 1: skip date part, 2: skip date and timezone
 
 ### getTimevalString(...)
-Same as getDateString but for JavaScript timeval
+Same as getDateString but for a JavaScript timeval
 
 ### encodeTimeNumber(hour, minute, tzOffset)
-// encoding that allows for difference and comparison in any time zone
-// hour, minute: number: base time 0-23, 0-59
-// tzOffset: offset from base location in minutes for result
-// if base is in utc timezone and tzOffset is -240, result will be in eastern time
+Encoding that allows for difference and comparison within a day for any time zone
 
-### inspectAll(v)
-provide unique all-encompassing string describing v value and type
+* hour, minute: number: base time 0-23, 0-59
+* tzOffset: offset from base location in minutes for result
+* if base is in utc timezone and tzOffset is -240, result will be in eastern time
 
-### inspectDeep(v)
-provide unique all-encompassing string describing v value and type, but do not print non-enumerable object properties
+# Notes
 
-### inspect(v, optsArg)
-// return value: printable string
-// opts: object
-// .maxString: optional number, default 40, max character of string to print
-// .maxProperties: optional number,default 10: max properties ot print
-// .maxLevels: optional numvber, default 2: max levels of objects and arrays to print
-// .nonEnum: optional boolean, default false: printing of non-enumerable object properties
+(c) [Harald Rudell](http://www.haraldrudell.com) wrote this for node in October, 2011
+
+No warranty expressed or implied. Use at your own risk.
+
+Please suggest better ways, new features, and possible difficulties on [github](https://github.com/haraldrudell/haraldutil)
