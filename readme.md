@@ -45,6 +45,24 @@ return value:
 * false: path1 is a directory
 * true: path1 is a file
 
+### parseTrace(e)
+
+If e is an Error object that has a stack trace, the parsed stack trace is returned as an object. Otherwise undefined is returned.
+
+return value: object or undefined
+* .message: string: the leading error message
+* .frames: array of object: captured stack traces
+
+Each frame in the frames arrau
+* .func: optional string: Object.function expression in the code
+* .as: optional string: function name if different from property name
+* .folder: optional string: if a folder other than current directory, then the absolute path to folder where source file is located, '/home/user'
+* .file: optional string: source file name, 'script.js'
+* .line: optional number: 10
+* .column optional number: 5
+* .source: optional string: text that may appear instead of file and folder, eg. 'unknown source'
+* .text: string: this frame as text. contains no newlines and has the leading at removed
+
 ### logException(e, heading, printmethod, offset)
 Log detauils about an exception.
 

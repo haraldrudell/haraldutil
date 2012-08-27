@@ -2,6 +2,7 @@
 
 var inspect = require ('../lib/inspect').inspect
 var assert = require('mochawrapper')
+var util = require('util')
 
 exports['Inspect:'] = {
 	'Primitives': function () {
@@ -251,7 +252,9 @@ exports['NonEnumerable Option:'] = {
 			setBufferContent(input)
 			setBufferContent(input.parent)
 			var i = input.parent
-			var expected = 'object:Buffer {\n  0:5,\n  1:6,\n  2:7,\n  3:8,\n  4:9,\n  ...,\n  9:99,\n  parent:object:SlowBuffer {\n    0:5,\n    1:6,\n    2:7,\n    3:8,\n    4:9,\n    ...,\n    8191:99,\n    used:7880,\n    length:8192\n  },\n  length:10,\n  offset:7864\n}'
+			var expected = util.format('object:Buffer {\n  0:5,\n  1:6,\n  2:7,\n  3:8,\n  4:9,\n  ...,\n  9:99,\n  parent:object:SlowBuffer {\n    0:5,\n    1:6,\n    2:7,\n    3:8,\n    4:9,\n    ...,\n    8191:99,\n    used:%s,\n    length:8192\n  },\n  length:10,\n  offset:%s\n}',
+				input.parent.used,
+				input.offset)
 			var actual = inspect(input, {nonEnum:true, maxProperties: 5})
 			assert.equal(actual, expected, arguments.callee.name)
 		}
