@@ -1,9 +1,15 @@
 {
-	"name" : "haraldutil",
-	"description" : "Utility functions for date and logging by Harald Rudell",
+	"name": "haraldutil",
+	"description": "Utility functions for date and logging by Harald Rudell",
 	"author": "Harald Rudell <harald@allgoodapps.com> (http://www.haraldrudell.com)",
-	"version" : "0.0.8",
-	"keywords": ["timestamp", "error", "inspect", "file", "type"],
+	"version": "0.0.9",
+	"keywords": [
+		"timestamp",
+		"error",
+		"inspect",
+		"file",
+		"type"
+	],
 	"contributors": [
 		{
 			"name": "Harald Rudell",
@@ -12,18 +18,18 @@
 		}
 	],
 	"devDependencies": {
-		"nodeunit": "",
-		"uglify-js": "",
-		"greatjson": ""
+		"mochawrapper": ""
 	},
-	"dependencies": {
-	},
-	"repository" : {
-		"type" : "git",
-		"url" : "https://haraldrudell@github.com/haraldrudell/haraldutil.git"
+	"dependencies": {},
+	"repository": {
+		"type": "git",
+		"url": "https://haraldrudell@github.com/haraldrudell/haraldutil.git"
 	},
 	"scripts": {
-		"test": "nodeunit test"
+		"test": "mocha --ui exports --reporter spec",
+		"monitor": "mocha --ui exports --reporter min --watch",
+		"debugtest": "mocha --debug-brk --ui exports --reporter spec",
+		"coverage": "mochacoverage"
 	},
-	"main" : "./lib/haraldutil"
+	"main": "./lib/haraldutil"
 }

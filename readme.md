@@ -6,18 +6,26 @@ Utility functions for time, errors, numbers and more.
 ### inspect(v, optsArg)
 return value: printable string
 
-* opts: optional object
-* .maxString: optional number: max string characters to print, default 40
-* .maxProperties: optional number: max properties to print, default 10
-* .maxLevels: optional number: max levels of objects and arrays to print, default 2
-* .nonEnum: optional boolean, default false: printing of non-enumerable object properties
-* .noArrayLength: optional boolean, default false: do not print array length
+Any value os formatted for exactly identifying type and value and will not contain unprontable characters
+
+By default, the following steps shorten the printout
+* Strings are shortened at 80 characters
+* Non-enumerable properties or prototype chains are not printed
+* Array-like properties are abbrevieted at 10 elements
+* Max 2 levels of object properties are printed
+
+optsArg
+* maxString: optional number, default 80
+* maxProperties: optional number, default 10
+* maxLevels: optional number, default 2
+* nonEnum: optional boolean, default false
+* noArrayLength: optional boolean, default true: do not print array length
 
 ### inspectAll(v)
-provide unique all-encompassing string describing v value and type.
+provide unique all-encompassing string describing value and type. 
 
 ### inspectDeep(v)
-provide unique all-encompassing string describing v value and type, but do not print non-enumerable object properties.
+Provides prototype chains, and unlimited strings. Abbreviates array-type properties at 10elements.
 
 ### merge(o1, o2, ...)
 Create an object constructed using the enumerable properties of all provided arguments.
