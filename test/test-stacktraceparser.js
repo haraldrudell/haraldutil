@@ -27,7 +27,7 @@ in emit callback: /home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mo
 var frameLeadin = '\n\u0020\u0020\u0020\u0020at\u0020'
 
 exports['FrameTypes:'] = {
-	'main': function () {
+	'Object.<anonymous> (folder/file:unknown)': function () {
 		var e = new Error
 		e.stack = 'x' + frameLeadin + 'Object.<anonymous> (/home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mongotest.js:10:2)'
 		var expected = {
@@ -44,7 +44,7 @@ exports['FrameTypes:'] = {
 		var actual = stacktraceparser.parseTrace(e)
 		assert.deepEqual(actual, expected)
 	},
-	'In function': function () {
+	'func (folder/file:line:col)': function () {
 		var e = new Error
 		e.stack = 'x' + frameLeadin + 'run (/home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mongotest.js:22:2)'
 		var expected = {
@@ -61,7 +61,7 @@ exports['FrameTypes:'] = {
 		var actual = stacktraceparser.parseTrace(e)
 		assert.deepEqual(actual, expected)
 	},
-	'With as': function () {
+	'Object.func [as alias] (folder/file:line:col)': function () {
 		var e = new Error
 		e.stack = 'x' + frameLeadin + 'Object.name [as alias] (/home/foxyboy/Desktop/c505/node/haraldutil/test/test-stacktraceparser.js:9:14)'
 		var expected = {
@@ -79,7 +79,7 @@ exports['FrameTypes:'] = {
 		var actual = stacktraceparser.parseTrace(e)
 		assert.deepEqual(actual, expected)
 	},
-	'Emit callback': function () {
+	'Folder/file:line:col': function () {
 		var e = new Error
 		e.stack = 'x' + frameLeadin + '/home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mongotest.js:32:3'
 		var expected = {
@@ -95,4 +95,45 @@ exports['FrameTypes:'] = {
 		var actual = stacktraceparser.parseTrace(e)
 		assert.deepEqual(actual, expected)
 	},
+	'File:line:col': function () {
+		var e = new Error
+		e.stack = 'x' + frameLeadin + 'node.js:623:3'
+		var expected = {
+			message: 'x',
+			frames: [{
+				func:'node.js',
+				line: '623',
+				column: '3',
+				text:'node.js:623:3',
+			}]
+		}
+		var actual = stacktraceparser.parseTrace(e)
+		assert.deepEqual(actual, expected)
+	},
+	'Object.func (text)': function () {
+		var e = new Error
+		e.stack = 'x' + frameLeadin + 'Object.Function (unknown source)'
+		var expected = {
+			message: 'x',
+			frames: [{
+				func:'Object.Function',
+				source:'unknown source',
+				text:'Object.Function (unknown source)',
+			}]
+		}
+		var actual = stacktraceparser.parseTrace(e)
+		assert.deepEqual(actual, expected)
+	},
 }
+
+/*
+Generating stack traces
+node -e 'console.log((new Error).stack)'
+Error
+    at [eval]:1:14
+    at Object.<anonymous> ([eval]-wrapper:6:22)
+    at Module._compile (module.js:449:26)
+    at evalScript (node.js:282:25)
+    at startup (node.js:76:7)
+    at node.js:623:3
+*/
