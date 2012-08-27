@@ -1,6 +1,7 @@
 // test-inspect.js
 
 var inspect = require ('../lib/inspect').inspect
+var inspectAll = require ('../lib/inspect').inspectAll
 var assert = require('mochawrapper')
 var util = require('util')
 
@@ -300,4 +301,13 @@ exports['NonEnumerable Option:'] = {
 
 		assert.equal(actual, expected, arguments.callee.name)
 	},
+}
+
+exports['InspectAll:'] = {
+	'Global object without exception': function () {
+		var actual = inspectAll(getGlobalObject())
+	}
+}
+function getGlobalObject() {
+	return this
 }
