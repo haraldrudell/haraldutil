@@ -3,10 +3,29 @@ Utility functions for time, errors, numbers and more.
 
 # Reference
 
-### inspect(v, optsArg)
-return value: printable string
+### inspectDeep(v)
+Provides prototype chains, and unlimited strings. Abbreviates array-type properties at 10 elements.
 
-Any value os formatted for exactly identifying type and value and will not contain unprontable characters
+```js
+var haraldutil = require('haraldutil')
+console.log(haraldutil.inspectDeep(console))
+```
+```
+{
+  info:function (),
+  log:recursive-object#2,
+  error:function (),
+  time:function (label),
+  warn:recursive-object#3,
+  dir:function (object),
+  trace:function (label),
+  assert:function (expression),
+  timeEnd:function (label)
+}
+```
+
+### inspect(v, optsArg)
+Prints any value in a way that conveys both value and type. The value is articulate and will not contain unprintable characters.
 
 By default, the following steps shorten the printout
 * Strings are shortened at 80 characters
@@ -23,9 +42,6 @@ optsArg
 
 ### inspectAll(v)
 provide unique all-encompassing string describing value and type. 
-
-### inspectDeep(v)
-Provides prototype chains, and unlimited strings. Abbreviates array-type properties at 10elements.
 
 ### merge(o1, o2, ...)
 Create an object constructed using the enumerable properties of all provided arguments.
