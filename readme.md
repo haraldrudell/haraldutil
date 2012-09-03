@@ -161,7 +161,7 @@ Each frame in the frames array
 * .source: optional string: text that may appear instead of file and folder, eg. 'unknown source'
 * .text: string: this frame as text. contains no newlines and has the leading at removed
 
-### eToString(err)
+### eToString(err, trace)
 make an Error object printable
 ```js
 var haraldutil = require('haraldutil')
@@ -187,10 +187,10 @@ SyntaxError: Unexpected token q
 type: 'unexpected_token'
 ```
 * e: Error object
-* noTrace: optional boolean: false: do not include the stack trace
+* trace: optional boolean: false: do not include the stack trace
 * return value: printable string
 
-### getLocation(includeObject, offset)
+### getLocation(opts)
 Gets the current script executing location as a string.
 ```js
 var haraldutil = require('haraldutil')
