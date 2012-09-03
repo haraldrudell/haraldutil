@@ -51,6 +51,36 @@ optsArg
 ### inspectAll(v)
 provide unique all-encompassing string describing value and type. 
 
+### getCbCounter()
+Ensures that all callbacks has completed
+
+```js
+var haraldutil = require('haraldutil')
+var cbc = haraldutil.getCbCounter()
+setTimeout(cbc.add(callback), 100)
+setTimeout(cbc.add(callback), 100)
+
+function callback() {
+  if (cbc.isDone(arguments.callee))
+    console.log('All callbacks completed.')
+  else console.log('Not done yet...')
+}
+```
+```
+Not done yet...
+All callbacks completed.
+```
+var cbc = getCbCounter(emitter)
+* emitter: optional event emiter or boolen
+* default: errors are thrown
+* false: errors are ignored
+* emitter: errors are emitted
+
+cbc: object
+* .add(f): adds a callback for function f, return value: f
+* .isDone(f): notes one callback completed. returns true if all callbacks complete, otherwise false
+* .getStatus(): gets an object representing the current state
+
 ### merge(o1, o2, ...)
 Create an object constructed using the enumerable properties of all provided arguments.
 

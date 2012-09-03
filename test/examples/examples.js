@@ -64,6 +64,19 @@ o1.a = 'changed'
 console.log('o:', o)
 },
 
+function cbCounter(require) {
+var haraldutil = require('haraldutil')
+var cbc = haraldutil.getCbCounter()
+setTimeout(cbc.add(callback), 100)
+setTimeout(cbc.add(callback), 100)
+
+function callback() {
+	if (cbc.isDone(arguments.callee))
+		console.log('All callbacks completed.')
+	else console.log('Not done yet...')
+}
+},
+
 ]
 
 demos.forEach(function (f) {
