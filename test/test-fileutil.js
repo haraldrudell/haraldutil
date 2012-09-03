@@ -1,11 +1,13 @@
 // test-fileutil.js
+// © Harald Rudell 2012
 
 var fileutil = require('../lib/fileutil')
+// https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
 
 exports['FileUtil:'] = {
 	'Directory': function () {
-		var expected = false
+		var expected = 1
 		var actual = fileutil.getType(__dirname)
 		assert.strictEqual(actual, expected, 'directory fails')
 	},

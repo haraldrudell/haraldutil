@@ -27,6 +27,14 @@ console.log(haraldutil.inspectDeep(console))
 ### inspect(v, optsArg)
 Prints any value in a way that conveys both value and type. The value is articulate and will not contain unprintable characters.
 
+```js
+var haraldutil = require('haraldutil')
+var a = 'abcdefghijklm'.split('')
+console.log(haraldutil.inspect(a))
+```
+```
+13:['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', ..., 'm']
+```
 By default, the following steps shorten the printout
 * Strings are shortened at 80 characters
 * Non-enumerable properties or prototype chains are not printed
@@ -46,30 +54,74 @@ provide unique all-encompassing string describing value and type.
 ### merge(o1, o2, ...)
 Create an object constructed using the enumerable properties of all provided arguments.
 
+```js
+var haraldutil = require('haraldutil')
+console.log(haraldutil.merge({a: 1}, {a: 2, b: 2}, {c: 3}))
+```
+```
+{ a: 2, b: 2, c: 3 }
+```
 * same name properties from later objects overwrite
 * return value: Object object with only enumerable properties
 
+### shallowClone(object)
+Create a shallow copy of an object
+```js
+var haraldutil = require('haraldutil')
+console.log('Any value works:', haraldutil.shallowClone(undefined))
+var o = {a: 'unchanged'}
+var o1 = haraldutil.shallowClone(o)
+o1.a = 'changed'
+console.log('o:', o)
+```
+```
+Any value works: {}
+o: { a: 'unchanged' }
+```
 ### browseTo(url)
-Opens the system default browser, or a new tab in the active browser window displaying the location url.
+Opens the system default browser, or a new tab in the active browser window, displaying the location url.
+```js
+require('haraldutil').browseTo('http://google.com').on('exit', function (code) {
+	if (code) console.log('Failed with exit code:' + code)
+})
+```
 
 ### getType(path1)
-Determine what path1 is.
-
+Determine what path1 is, an improved to fs.exists function.
+```js
+var haraldutil = require('haraldutil')
+console.log('Type:', haraldutil.getType('/home'))
+```
+```
+Type: 1
+```
 return value:
 
 * undefined: path1 does not exist
-* false: path1 is a directory
+* 1: path1 is a directory
 * true: path1 is a file
 
 ### parseTrace(e)
 
 If e is an Error object that has a stack trace, the parsed stack trace is returned as an object. Otherwise undefined is returned.
-
+```js
+var haraldutil = require('haraldutil')
+var s = haraldutil.parseTrace(new Error)
+if (s) console.log(s.frames[0])
+```
+```
+{ text: 'parseTrace (/home/foxyboy/Desktop/c505/node/haraldutil/test/examples/examples.js:40:31)',
+  folder: '/home/foxyboy/Desktop/c505/node/haraldutil/test/examples',
+  file: 'examples.js',
+  line: 40,
+  column: 31,
+  func: 'parseTrace' }
+```
 return value: object or undefined
 * .message: string: the leading error message
 * .frames: array of object: captured stack traces
 
-Each frame in the frames arrau
+Each frame in the frames array
 * .func: optional string: Object.function expression in the code
 * .as: optional string: function name if different from property name
 * .folder: optional string: if a folder other than current directory, then the absolute path to folder where source file is located, '/home/user'
@@ -79,45 +131,52 @@ Each frame in the frames arrau
 * .source: optional string: text that may appear instead of file and folder, eg. 'unknown source'
 * .text: string: this frame as text. contains no newlines and has the leading at removed
 
-### logException(e, heading, printmethod, offset)
-Log detauils about an exception.
-
-* heading: optional heading string, eg. 'reading file'
-* printmethod: method to use for output, default: console.log
-* Offset possible call stack offset, default callers location
-
-### checkSuccess(error, heading, printmethod, offset)
-Checks for success outcome in a callback
-
-* error: callback error argument
-* heading: optional heading string, eg. 'reading file'
-* printmethod: method to use for output, default: console.log
-* offset possible call stack offset, default callers location
-* return value: true if there was no error
-
-### logError(e, heading, printmethod, offset)
-Outputs an error to the log.
-
-* e: error value, such as an Error object or catch argument
-* heading: optional heading string, eg. 'reading file'
-* printmethod: mnethod to use for output, default: console.log
-* offset possible call stack offset, default callers location
+### eToString(err)
+make an Error object printable
+```js
+var haraldutil = require('haraldutil')
+try {
+	JSON.parse('que')
+} catch (e) {
+	console.log(haraldutil.eToString(e))
+}
+```
+Note the type property that JSON.parse adds to the Error object:
+```
+SyntaxError: Unexpected token q
+    at Object.parse (native)
+    at eToString (/home/foxyboy/Desktop/c505/node/haraldutil/test/examples/examples.js:52:7)
+    at demonstrate (/home/foxyboy/Desktop/c505/node/haraldutil/test/examples/examples.js:70:2)
+    at /home/foxyboy/Desktop/c505/node/haraldutil/test/examples/examples.js:61:2
+    at Array.forEach (native)
+    at Object.<anonymous> (/home/foxyboy/Desktop/c505/node/haraldutil/test/examples/examples.js:60:7)
+    at Module._compile (module.js:449:26)
+    at Object.Module._extensions..js (module.js:467:10)
+    at Module.load (module.js:356:32)
+    at Function.Module._load (module.js:312:12)
+type: 'unexpected_token'
+```
+* e: Error object
+* noTrace: optional boolean: false: do not include the stack trace
+* return value: printable string
 
 ### getLocation(includeObject, offset)
 Gets the current script executing location as a string.
+```js
+var haraldutil = require('haraldutil')
+console.log(haraldutil.getLocation())
+```
+```
+function: demonstrate file: examples.js:61:2 folder: /home/foxyboy/Desktop/c505/node/haraldutil/test/examples
+```
+* opts: optional object
+* .offset: offset in the stack for lcoation
+* .err: optional Error object
+* .object: optional boolean: false: do not prepend object and * method, eg. Module.load
+* .folder: optional boolean: false: do not include file folder
 
-* includeObject: prepend object and method, eg. Module.load
-* offset: caller offset in the stack
-* return value: printable string eg. 'file:tracker.js:5:15 function:Object.<anonymous> folder:/home/folder'
-
-### eToString(err)
-Converts an Error object to string including
-
-* Error type and message
-* Stack trace
-* Any hidden or enumerable properties
-
-Values other than Error objects are converted to string
+return value: printable string
+* empty string on troubles
 
 ### toNumber(str, allowFloat)
 parse numbers, NaN if trailing non-numeric characters

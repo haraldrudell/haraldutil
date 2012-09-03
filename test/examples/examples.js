@@ -1,21 +1,74 @@
 // examples.js
+// haraldutil examples for readme
+// © Harald Rudell 2012
 
-/*
-new Error is not a good example, because the stack trace is printed
-*/
+var realPath = '../../lib/haraldutil'
 
-demonstrate(inspectDeep, '../../lib/haraldutil')
-demonstrate(inspect, '../../lib/haraldutil')
+// code
+
+var demos = [
 
 function inspectDeep(require) {
 var haraldutil = require('haraldutil')
 console.log(haraldutil.inspectDeep(console))
-}
+},
 
 function inspect(require) {
 var haraldutil = require('haraldutil')
-console.log(haraldutil.inspect(console))
+var a = 'abcdefghijklm'.split('')
+console.log(haraldutil.inspect(a))
+},
+/*
+function browseTo(require) {
+require('haraldutil').browseTo('http://google.com').on('exit', function (code) {
+	if (code) console.log('Failed with exit code:' + code)
+})
+},
+*/
+function merge(require) {
+var haraldutil = require('haraldutil')
+console.log(haraldutil.merge({a: 1}, {a: 2, b: 2}, {c: 3}))
+},
+
+function getType(require) {
+var haraldutil = require('haraldutil')
+console.log('Type:', haraldutil.getType('/home'))
+},
+
+function parseTrace(require) {
+var haraldutil = require('haraldutil')
+var s = haraldutil.parseTrace(new Error)
+if (s) console.log(s.frames[0])
+},
+
+function getLocation(require) {
+var haraldutil = require('haraldutil')
+console.log(haraldutil.getLocation())
+},
+
+function eToString(require) {
+var haraldutil = require('haraldutil')
+try {
+	JSON.parse('que')
+} catch (e) {
+	console.log(haraldutil.eToString(e))
 }
+},
+
+function shallowClone(require) {
+var haraldutil = require('haraldutil')
+console.log('Any value works:', haraldutil.shallowClone(undefined))
+var o = {a: 'unchanged'}
+var o1 = haraldutil.shallowClone(o)
+o1.a = 'changed'
+console.log('o:', o)
+},
+
+]
+
+demos.forEach(function (f) {
+	demonstrate(f, realPath)
+})
 
 // utility
 
@@ -27,7 +80,7 @@ function demonstrate(func, relative) {
 }
 
 function getSource(func) {
-	var match = func.toString().match(/[\s\S]*\{([\s\S]*)\}/m)
+	var match = func.toString().match(/[^{]*\{([\s\S]*)\}/m)
 	var source = match ? match[1].trim() : ''
 	return source
 }
