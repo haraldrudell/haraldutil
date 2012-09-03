@@ -2,6 +2,7 @@
 
 var inspect = require ('../lib/inspect').inspect
 var inspectAll = require ('../lib/inspect').inspectAll
+var inspectDeep = require ('../lib/inspect').inspectDeep
 var assert = require('mochawrapper')
 var util = require('util')
 
@@ -227,9 +228,10 @@ exports['NonEnumerable Option:'] = {
 	},
 	'Error': function () {
 		var input = Error('abc')
-		var expected =
+		var expected0 =
 			'object:Error {\n' +
-			'  (nonE)(get)stack:\'Error: abc\\n    at Error (unknown source...\',\n' +
+			'  (nonE)(get)stack:Error: abc,\n' + spaces(6) + 'at '
+		var expected1 =
 			'  (nonE)type:undefined,\n' +
 			'  (nonE)message:\'abc\',\n' +
 			'  (nonE)arguments:undefined,\n' +
@@ -238,8 +240,11 @@ exports['NonEnumerable Option:'] = {
 			'  (nonE)message:\'\',\n' +
 			'  (nonE)toString:function toString()\n' +
       			'}'
-		var actual = inspect(input, {nonEnum:true, maxString:40})
-		assert.equal(actual, expected, arguments.callee.name)
+		var actual = inspect(input, {nonEnum:true, maxString:0})
+		var a0 = actual.substring(0, expected0.length)
+		assert.equal(a0, expected0, arguments.callee.name)
+		var a1 = actual.slice(-expected1.length)
+		assert.equal(a1, expected1, arguments.callee.name)
 	},
 	'JSON': function () {
 		var input = JSON
@@ -310,4 +315,16 @@ exports['InspectAll:'] = {
 }
 function getGlobalObject() {
 	return this
+}
+
+function spaces(n) {
+	var result = ''
+	var spaces = '\u0020'
+	n |= 0 // convert to 32-bit integer
+	if (n > 0) for (;;) {
+		if (n & 1) result += spaces
+		if (!(n >>>= 1)) break
+		spaces += spaces
+	}
+	return result
 }
