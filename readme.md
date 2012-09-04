@@ -211,6 +211,32 @@ function: demonstrate file: examples.js:61:2 folder: /home/foxyboy/Desktop/c505/
 return value: printable string
 * empty string on troubles
 
+### getJsonStore(opts, cb)
+Facilitates easy save of objects in the filesystem.
+
+```js
+var haraldutil = require('haraldutil')
+var store = haraldutil.getJsonStore({name: 'json'})
+store[store.getNextId()] = {key: 'value'}
+store.save()
+```
+
+opts: object
+* .name: string filename
+
+  * default name is 'temp'
+  * default extension is .json
+  * default folder is a suitable temp folder
+
+* emitter: optional error emitter, default: errors are thrown
+
+  * false: errors are ignored
+cb: optional callback
+
+return value: store object
+* .save(cb(err)): save to disk
+* .getNextId(): gets a new serial number
+
 ### toNumber(str, allowFloat)
 parse numbers, NaN if trailing non-numeric characters
 

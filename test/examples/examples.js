@@ -77,6 +77,13 @@ function callback() {
 }
 },
 
+function getJsonStore(require) {
+var haraldutil = require('haraldutil')
+var store = haraldutil.getJsonStore({name: 'json'})
+store[store.getNextId()] = {key: 'value'}
+store.save()
+},
+
 ]
 
 demos.forEach(function (f) {

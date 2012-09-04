@@ -1,7 +1,6 @@
 // test-cbcounter.js
-
 // © Harald Rudell 2012
-console.log('testcbcounter', __filename)
+
 var cbcounter = require('../lib/cbcounter')
 // https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
