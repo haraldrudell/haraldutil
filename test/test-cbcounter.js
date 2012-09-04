@@ -55,21 +55,40 @@ exports['Callback Counter Errors:'] = {
 
 		function f() {}
 	},
-	'Ignore Errors': function () {
+}
+
+exports['Callback Counter Options:'] = {
+	'Emitter false': function () {
 		var expected = {}
 
-		var cbc = cbcounter.getCbCounter(false)
+		var cbc = cbcounter.getCbCounter({emitter: false})
 		assert.equal(cbc.isDone(1), true)
 	},
-	'Emit Errors': function () {
+	'Emitter object': function () {
 		var emits = 0
 
-		var cbc = cbcounter.getCbCounter({emit: mockEmit})
+		var cbc = cbcounter.getCbCounter({emitter: {emit: mockEmit}})
 		assert.equal(cbc.isDone(function () {}), true)
 		assert.equal(emits, 1)
 
 		function mockEmit() {
 			emits++
 		}
+	},
+	'Callback function': function () {
+		var expected = {'f()': 1}
+
+		var cbc = cbcounter.getCbCounter({callback: f})
+		assert.deepEqual(cbc.getState(), expected)
+
+		function f() {}
+	},
+	'Callback Array': function () {
+		var expected = {'f()': 2}
+
+		var cbc = cbcounter.getCbCounter({callback: [f, f]})
+		assert.deepEqual(cbc.getState(), expected)
+
+		function f() {}
 	},
 }

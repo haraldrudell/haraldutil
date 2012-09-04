@@ -70,11 +70,14 @@ function callback() {
 Not done yet...
 All callbacks completed.
 ```
-var cbc = getCbCounter(emitter)
-* emitter: optional event emiter or boolen
-* default: errors are thrown
-* false: errors are ignored
-* emitter: errors are emitted
+var cbc = getCbCounter(opts)
+* opts: optional object
+* opts.emitter: optional event emitter or boolean. default: errors are thrown
+
+  * false: errors are ignored
+  * emitter: errors are emitted
+
+* opts.callback: function or array of function: add is done for each function
 
 cbc: object
 * .add(f): adds a callback for function f, return value: f
