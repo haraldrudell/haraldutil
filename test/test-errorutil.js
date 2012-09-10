@@ -50,7 +50,7 @@ exports['EToString:'] = {
 }
 
 exports['GetLocation:'] = {
-	'Invocation': function () {
+	'Basic Invocation': function () {
 		var expected = [
 			'file: ' + path.basename(__filename),
 			'folder: ' + __dirname,
@@ -73,7 +73,7 @@ exports['GetLocation:'] = {
 		var actual = errorutil.getLocation({folder: false})
 		assert.ok(!~actual.indexOf(expected1))
 	},
-	'.err option': function () {
+	'.err option without new': function () {
 		var expected = [
 			'function: ',
 			'exports.' + this.test.parent.title + '.' + this.test.title,
@@ -89,10 +89,35 @@ exports['GetLocation:'] = {
 			assert.ok(~actual.indexOf(str), 'return value did not contain:\n\'' + str + '\'\nactual:\n\'' + actual + '\'', false)
 		})
 	},
+	'.err option with new': function () {
+		var expected = [
+			'function: ',
+			'exports.' + this.test.parent.title + '.' + this.test.title,
+			'folder: ' + __dirname,
+			'file: ' + path.basename(__filename),
+		]
+
+		var e = new Error('que')
+//console.log(require('../lib/stacktraceparser').parseTrace(e))
+		var actual = errorutil.getLocation({err: e})
+		assert.equal(typeof actual, 'string')
+		expected.forEach(function (str) {
+			assert.ok(~actual.indexOf(str), 'return value did not contain:\n\'' + str + '\'\nactual:\n\'' + actual + '\'', false)
+		})
+	},
 	'.offset option': function () {
-		var expected = 'file: errorutil.js'
+		var expected = 'function: f'
+		var err = f()
 		// file:errorutil.js:91:41 function:Object.getLocation folder:/home/foxyboy/Desktop/c505/node/haraldutil/lib
-		var actual = errorutil.getLocation({offset: 0})
+		var actual = errorutil.getLocation({err: err, offset: 1})
 		assert.ok(~actual.indexOf(expected), 'return value should contain:\'' + expected + '\'\nactual:\n\'' + actual + '\'', false)
+
+		function f(a) {
+			return g()
+
+			function g(b) {
+				return new Error
+			}
+		}
 	},
 }
