@@ -5,7 +5,7 @@ Utility functions for time, errors, numbers and more.
 
 1. Convert any object or value to a printable string extacly defining types and values
 2. Handle object function arguments with helper functions
-3. Easily parse, print and filter error results, stack traces and code locations
+3. Easily parse, filter and print error results, stack traces and code locations
 4. Read numbers in a strict way
 5. Handle, convert and compare time formats and timezones
 
