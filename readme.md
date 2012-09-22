@@ -1,6 +1,22 @@
 # haraldutil
 Utility functions for time, errors, numbers and more.
 
+## Benefits
+
+1. Convert any object or value to a printable string extacly defining types and values
+2. Handle object function arguments with helper functions
+3. Easily parse, print and filter error results, stack traces and code locations
+4. Read numbers in a strict way
+5. Handle, convert and compare time formats and timezones
+
+## Features
+
+1. Flexible and recursive conversion of any value to a string representation
+2. Object manipulation methods
+3. Portable path, number and browser functions
+4. Error and stack trace parsers and string conversions
+5. JavaScript time value, Unix timestamp and timezone functions
+
 # Reference
 
 ### inspectDeep(v)

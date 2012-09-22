@@ -23,7 +23,7 @@
 	"dependencies": {},
 	"repository": {
 		"type": "git",
-		"url": "https://haraldrudell@github.com/haraldrudell/haraldutil.git"
+		"url": "https://github.com/haraldrudell/haraldutil"
 	},
 	"scripts": {
 		"test": "mocha --ui exports --reporter spec",
