@@ -294,6 +294,21 @@ Convert unix timestamp to string like '2011-09-30T23:21-0400'
 ### getTimevalString(...)
 Same as getDateString but for a JavaScript timeval
 
+### getISOPacific(date, offset)
+Print an ISO8601 string adjusted for US daylight savings
+```
+var haraldutil = require('haraldutil')
+console.log(haraldutil.getISOPacific())
+```
+```
+2012-07-01T02:00-08
+```
+
+* date a Date object, default now
+* offset number, minutes from utc, default -420 (Pacific standard time)
+
+Note that JavaScript does not have daylight data for timezones
+
 ### encodeTimeNumber(hour, minute, tzOffset)
 Encoding that allows for difference and comparison within a day for any time zone
 

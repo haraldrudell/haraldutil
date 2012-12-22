@@ -53,3 +53,20 @@ exports['ToNumber'] = {
 		}
 	},
 }
+
+exports['GetISOPacific'] = {
+	'Summer': function () {
+		var summer = new Date('2012-07-01 10:00Z')
+		var e = '2012-07-01T02:00-08'
+
+		var actual = haraldutil.getISOPacific(summer)
+		assert.equal(actual, e)
+	},
+	'Winter': function () {
+		var winter = new Date('2012-01-01 10:00Z')
+		var e = '2012-01-01T03:00-07'
+
+		var actual = haraldutil.getISOPacific(winter)
+		assert.equal(actual, e)
+	},
+}
