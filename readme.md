@@ -227,6 +227,16 @@ function: demonstrate file: examples.js:61:2 folder: /home/foxyboy/Desktop/c505/
 return value: printable string
 * empty string on troubles
 
+### getLoc()
+Gets location as file:line
+```js
+var haraldutil = require('haraldutil')
+console.log(haraldutil.getLoc(), 'Hello')
+```
+```
+examples.js:61 Hello
+```
+
 ### getJsonStore(opts, cb)
 Facilitates easy save of objects in the filesystem.
 
