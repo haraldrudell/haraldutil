@@ -223,19 +223,28 @@ function: demonstrate file: examples.js:61:2 folder: /home/foxyboy/Desktop/c505/
 * .err: optional Error object
 * .object: optional boolean: false: do not prepend object and * method, eg. Module.load
 * .folder: optional boolean: false: do not include file folder
+* .fileline: true: no column, no fileheader
+* .dropExt: remove extention from filename
+* .addAfterFile: string
 
 return value: printable string
 * empty string on troubles
 
-### getLoc()
+### getLoc(s)
 Gets location as file:line
 ```js
+// example.js
 var haraldutil = require('haraldutil')
-console.log(haraldutil.getLoc(), 'Hello')
+funcName()
+function funcName() {
+  // next line is line 6
+  console.log(haraldutil.getLoc(arguments.callee.name), 'Hello')
+}
 ```
 ```
-examples.js:61 Hello
+example:6:funcName Hello
 ```
+* s: optional string
 
 ### getJsonStore(opts, cb)
 Facilitates easy save of objects in the filesystem.
