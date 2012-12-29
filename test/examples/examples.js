@@ -35,6 +35,16 @@ var haraldutil = require('haraldutil')
 console.log('Type:', haraldutil.getType('/home'))
 },
 
+function getHomeFolder(require) {
+var haraldutil = require('haraldutil')
+console.log('Home folder:', haraldutil.getHomeFolder())
+},
+
+function getTmpFolder(require) {
+var haraldutil = require('haraldutil')
+console.log('Tmp folder:', haraldutil.getTmpFolder())
+},
+
 function parseTrace(require) {
 var haraldutil = require('haraldutil')
 var s = haraldutil.parseTrace(new Error)
@@ -64,24 +74,19 @@ o1.a = 'changed'
 console.log('o:', o)
 },
 
-function cbCounter(require) {
+function createKey(require) {
 var haraldutil = require('haraldutil')
-var cbc = haraldutil.getCbCounter()
-setTimeout(cbc.add(callback), 100)
-setTimeout(cbc.add(callback), 100)
-
-function callback() {
-	if (cbc.isDone(arguments.callee))
-		console.log('All callbacks completed.')
-	else console.log('Not done yet...')
-}
+var dbServer = 'server'
+var dbTable = 'table'
+var dbTable2 = 'table2'
+var key1 = haraldutil.createKey(dbServer, dbTable)
+var key2 = haraldutil.createKey(dbServer, dbTable2)
+if (key1 !== key2) console.log('not the same')
 },
 
-function getJsonStore(require) {
+function periodString(require) {
 var haraldutil = require('haraldutil')
-var store = haraldutil.getJsonStore({name: 'json'})
-store[store.getNextId()] = {key: 'value'}
-store.save()
+console.log('The world will come to an end in:', haraldutil.periodString(1e7))
 },
 
 ]

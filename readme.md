@@ -11,7 +11,7 @@ Utility functions for time, errors, numbers and more.
 
 ## Features
 
-1. Flexible and recursive conversion of any value to a string representation
+1. Conversion of any value to printable string representation
 2. Object manipulation methods
 3. Portable path, number and browser functions
 4. Error and stack trace parsers and string conversions
@@ -65,40 +65,7 @@ optsArg
 * noArrayLength: optional boolean, default true: do not print array length
 
 ### inspectAll(v)
-provide unique all-encompassing string describing value and type. 
-
-### getCbCounter()
-Ensures that all callbacks has completed
-
-```js
-var haraldutil = require('haraldutil')
-var cbc = haraldutil.getCbCounter()
-setTimeout(cbc.add(callback), 100)
-setTimeout(cbc.add(callback), 100)
-
-function callback() {
-  if (cbc.isDone(arguments.callee))
-    console.log('All callbacks completed.')
-  else console.log('Not done yet...')
-}
-```
-```
-Not done yet...
-All callbacks completed.
-```
-var cbc = getCbCounter(opts)
-* opts: optional object
-* opts.emitter: optional event emitter or boolean. default: errors are thrown
-
-  * false: errors are ignored
-  * emitter: errors are emitted
-
-* opts.callback: function or array of function: add is done for each function
-
-cbc: object
-* .add(f): adds a callback for function f, return value: f
-* .isDone(f): notes one callback completed. returns true if all callbacks complete, otherwise false
-* .getStatus(): gets an object representing the current state
+provide unique all-encompassing string describing value and type.
 
 ### merge(o1, o2, ...)
 Create an object constructed using the enumerable properties of all provided arguments.
@@ -149,6 +116,26 @@ return value:
 * undefined: path1 does not exist
 * 1: path1 is a directory
 * true: path1 is a file
+
+### getHomeFolder()
+Get the path to the user's home folder
+```js
+var haraldutil = require('haraldutil')
+console.log('Home folder:', haraldutil.getHomeFolder())
+```
+```
+Home folder: /home/foxyboy
+```
+
+### getHomeFolder()
+Get path to a folder for temporary files
+```js
+var haraldutil = require('haraldutil')
+console.log('Tmp folder:', haraldutil.getTmpFolder())
+```
+Tmp folder: /home/foxyboy/tmp
+```
+if the user's home folder has a tmp, this is used. Otherwise, the systems temporary files folder is provided.
 
 ### parseTrace(e)
 
@@ -246,32 +233,6 @@ example:6:funcName Hello
 ```
 * s: optional string
 
-### getJsonStore(opts, cb)
-Facilitates easy save of objects in the filesystem.
-
-```js
-var haraldutil = require('haraldutil')
-var store = haraldutil.getJsonStore({name: 'json'})
-store[store.getNextId()] = {key: 'value'}
-store.save()
-```
-
-opts: object
-* .name: string filename
-
-  * default name is 'temp'
-  * default extension is .json
-  * default folder is a suitable temp folder
-
-* emitter: optional error emitter, default: errors are thrown
-
-  * false: errors are ignored
-cb: optional callback
-
-return value: store object
-* .save(cb(err)): save to disk
-* .getNextId(): gets a new serial number
-
 ### toNumber(str, allowFloat)
 parse numbers, NaN if trailing non-numeric characters
 
@@ -324,6 +285,36 @@ Encoding that allows for difference and comparison within a day for any time zon
 * hour, minute: number: base time 0-23, 0-59
 * tzOffset: offset from base location in minutes for result
 * if base is in utc timezone and tzOffset is -240, result will be in eastern time
+
+### CreateKey(s1, s2, ...)
+Construct a unique string value based on the function arguments.
+```js
+var haraldutil = require('haraldutil')
+var dbServer = 'server'
+var dbTable = 'table'
+var dbTable2 = 'table2'
+var key1 = haraldutil.createKey(dbServer, dbTable)
+var key2 = haraldutil.createKey(dbServer, dbTable2)
+if (key1 !== key2) console.log('not the same')
+```
+```
+not the same
+```
+
+* If any argument is not a non-empty string, exception is thrown
+* For keys to match, every string argument at their creation must have been exactly the same
+
+### periodString(num)
+provide a human-readable string expressing a time period to two-digit precision
+var haraldutil = require(```js
+'haraldutil')
+console.log('The world will come to an end in:', haraldutil.periodString(1e7))
+```
+```
+The world will come to an end in: 2 h 46 min
+```
+
+* num: timevalue, unit: ms, positive value
 
 # Notes
 
