@@ -39,8 +39,7 @@ exports['EToString:'] = {
 		assert.ok(~actual.indexOf(expected2), 'return value did not contain:\'' + expected2 + '\' actual:\'' + actual + '\'')
 	},
 	'noTrace': function () {
-		var expected = 'SyntaxError: 123\n' +
-			'extra: \'haha\''
+		var expected = 'SyntaxError: 123 {extra: \'haha\'}'
 		var e = SyntaxError('123')
 		e.extra = 'haha'
 

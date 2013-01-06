@@ -103,7 +103,6 @@ exports['Inspect:'] = {
 			'    }\n' +
 			'  }\n' +
 			'}'
-console.log(actual)
 		assert.equal(actual, expected, arguments.callee.name)
 	},
 	'FunctionProperty': function () {
