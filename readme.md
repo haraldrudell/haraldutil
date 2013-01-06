@@ -19,6 +19,41 @@ Utility functions for time, errors, numbers and more.
 
 # Reference
 
+### p(...)
+Printout with code location and inspect of values
+```js
+var p = require('haraldutil').p
+
+p('Printouts start with code location: file:line:function')
+p('In an anonymous function, the function name is omitted')
+someFunction()
+
+function someFunction() {
+  p('Value examples:', undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
+}
+```
+```
+examples:14:p 'Printouts start with code location: file:line:function'
+examples:15:p 'In an anonymous function, the function name is omitted'
+examples:19:someFunction 'Value examples:' undefined '1' object:Class {a: 1} function stringify() Error: a
+```
+
+### pargs(arguments)
+Prints the argument list for a function
+```js
+var haraldutil = require('haraldutil')
+var pargs = haraldutil.pargs
+
+LogPrinter(undefined, 'abc', {a: 1, b: 2}, new Error('a'))
+
+function LogPrinter() {
+  pargs(arguments)
+}
+
+```
+```
+examples:30:LogPrinter undefined 'abc' {a: 1, b: 2} Error: a
+```
 ### inspectDeep(v)
 Provides prototype chains, and unlimited strings. Abbreviates array-type properties at 10 elements.
 

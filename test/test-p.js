@@ -96,14 +96,28 @@ exports['P:'] = {
 		assert.ok(!isNaN(line) && line > 0, 'Bad line number: ' + line + ' from string: \'' + lineString + '\'')
 	},
 	'PARGS': function () {
-		var expected = '1 \'abc\' {a: 1}'
+		var aLogs = 0
+		var expected0 = path.basename(__filename, path.extname(__filename)) + ':'
+		var expected1 = ':' + f.name + ' 1 \'abc\' {a: 1}'
 
+		console.log = mockLog
 		var actual = f(1, 'abc', {a: 1})
+		console.log = cl
+
+		assert.ok(aLogs)
 		assert.equal(typeof actual, 'string')
-		assert.equal(actual, expected)
+		assert.equal(actual.substring(0, expected0.length), expected0)
+		assert.equal(actual.slice(-expected1.length), expected1)
+		var lineString = actual.slice(expected0.length, -expected1.length)
+
+		var line = tonumber.toNumber(lineString)
+		assert.ok(!isNaN(line) && line > 0, 'Bad line number: ' + line + ' from string: \'' + lineString + '\'')
 
 		function f(a, b, c) {
 			return p.pargs(arguments)
+		}
+		function mockLog(x) {
+			aLogs++
 		}
 	},
 	'PPrepend': function () {

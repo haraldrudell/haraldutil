@@ -11,34 +11,23 @@ var demos = [
 function p(require) {
 var p = require('haraldutil').p
 
+p('Printouts start with code location: file:line:function')
 p('In an anonymous function, the function name is omitted')
 someFunction()
 
 function someFunction() {
-	p('Inspect of each argument:', undefined, '1', new Class() {this.a = 1}, JSON.stringify, new Error('a'))
+	p('Value examples:', undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
 }
 },
 
 function pargs(require) {
 var haraldutil = require('haraldutil')
-var p = haraldutil.p
 var pargs = haraldutil.pargs
 
 LogPrinter(undefined, 'abc', {a: 1, b: 2}, new Error('a'))
 
 function LogPrinter() {
-	p(pargs(arguments))
-	var s = []
-	Array.prototype.slice.call(arguments).forEach(function (arg) {
-		s.push(haraldutil.inspect(arg))
-	})
-	console.log('inspect:', s.join(', '))
-	var s = []
-	Array.prototype.slice.call(arguments).forEach(function (arg) {
-		s.push(haraldutil.inspectDeep(arg))
-	})
-	console.log('inspectDeep:', s.join(', '))
-	console.log.apply(this, ['util.format:'].concat(Array.prototype.slice.call(arguments)))
+	pargs(arguments)
 }
 },
 
