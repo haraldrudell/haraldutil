@@ -29,7 +29,9 @@ p('In an anonymous function, the function name is omitted')
 someFunction()
 
 function someFunction() {
-  p('Value examples:', undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
+  p('Value examples:', undefined, '1',
+    new function Class() {this.a = 1},
+    JSON.stringify, new Error('a'))
 }
 ```
 ```
@@ -56,6 +58,26 @@ function LogPrinter() {
 ```
 examples:30:LogPrinter undefined 'abc' {a: 1, b: 2} Error: a
 ```
+
+## pPrepend(str)
+Add a lead-in to functions p, ps, pargs, pp, pps
+```js
+var haraldutil = require('haraldutil')
+var p = haraldutil.p
+var pPrepend = haraldutil.pPrepend
+
+pPrepend(process.pid)
+p('Launching of new process')
+
+pPrepend(require('os').hostname() + ':' + process.pid)
+p('Launching on new host')
+```
+```
+8398:examples:53:pPrepend 'Launching of new process'
+c505:8398:examples:56:pPrepend 'Launching on new host'
+```
+* null: gets the current prepend value
+* undefined: removes the current prepend value
 
 ### pp(...), pps()
 Printout with code location and exhaustive inspect of values

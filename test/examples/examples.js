@@ -41,7 +41,19 @@ function LogPrinter() {
 }
 },
 
-],x=[
+function pPrepend(require) {
+var haraldutil = require('haraldutil')
+var p = haraldutil.p
+var pPrepend = haraldutil.pPrepend
+
+pPrepend(process.pid)
+p('Launching of new process')
+
+pPrepend(require('os').hostname() + ':' + process.pid)
+p('Launching on new host')
+
+},
+
 function (require) {
 var haraldutil = require('haraldutil')
 var p = haraldutil.p
