@@ -185,8 +185,8 @@ console.log(actual)
 		assert.equal(actual, expected, arguments.callee.name)
 	},
 	'Option singleLine': function () {
-		var input = {a: {b: 2}}
-		var expected = '{a: {b: 2}}'
+		var input = {a: {b: 2, c: 3}}
+		var expected = '{a: {b: 2, c: 3}}'
 
 		var actual = inspect(input, {singleLine: true})
 		assert.equal(actual, expected, arguments.callee.name)
