@@ -3,19 +3,19 @@ Utility functions for time, errors, numbers and more.
 
 ## Benefits
 
-1. Convert any object or value to a printable string extacly defining types and values
-2. Handle object function arguments with helper functions
-3. Easily parse, filter and print error results, stack traces and code locations
-4. Read numbers in a strict way
-5. Handle, convert and compare time formats and timezones
+2. Save on troubles and code lines with well tested, often sought functions.
+1. Immediately find printout statements by having file and function names.
+4. See the exact type of values with hidden properties and full prototype chains.
+4. Separate printouts from multiple instances by preceding with process id or host.
+3. Enhanced app portability across Linux, Mac and Windows.
 
 ## Features
 
-1. Conversion of any value to printable string representation
-2. Object manipulation methods
-3. Portable path, number and browser functions
-4. Error and stack trace parsers and string conversions
-5. JavaScript time value, Unix timestamp and timezone functions
+1. Conversion of any value to printable string representation.
+2. Object manipulation methods.
+3. Portable path, number and browser-launch functions.
+4. Error and stack trace parsers and string conversions.
+5. JavaScript time value, Unix timestamp and timezone functions.
 
 # Reference
 
@@ -277,14 +277,16 @@ console.log(haraldutil.getISOPacific())
 * date a Date object, default now
 * offset number, minutes from utc, default -420 (Pacific standard time)
 
-Note that JavaScript does not have daylight data for timezones
+Note that JavaScript does not provide daylight savings data for timezones, but it is implemented here of the US.
 
 ### encodeTimeNumber(hour, minute, tzOffset)
 Encoding that allows for difference and comparison within a day for any time zone
 
+This allows to compare what is earlier in the day for another timezone than localtime or utc, using the commonly available utc timevalues.
+
 * hour, minute: number: base time 0-23, 0-59
 * tzOffset: offset from base location in minutes for result
-* if base is in utc timezone and tzOffset is -240, result will be in eastern time
+* if base is in utc timezone and tzOffset is -240, result will be in eastern daylight time
 
 ### CreateKey(s1, s2, ...)
 Construct a unique string value based on the function arguments.
@@ -306,8 +308,8 @@ not the same
 
 ### periodString(num)
 provide a human-readable string expressing a time period to two-digit precision
-var haraldutil = require(```js
-'haraldutil')
+```js
+var haraldutil = require('haraldutil')
 console.log('The world will come to an end in:', haraldutil.periodString(1e7))
 ```
 ```

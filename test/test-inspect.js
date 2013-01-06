@@ -66,9 +66,9 @@ exports['Inspect:'] = {
 	},
 	'Array objects': function () {
 		var tests = {
-			'Empty array': { value: [], expected: '0:[]'},
-			'Single-value array': { value: [1], expected: '1:[1]'},
-			'Two-value array': { value: [1, 2], expected: '2:[1, 2]'},
+			'Empty array': { value: [], expected: '0[]'},
+			'Single-value array': { value: [1], expected: '1[1]'},
+			'Two-value array': { value: [1, 2], expected: '2[1, 2]'},
 		}
 
 		for (var testName in tests) {
@@ -94,15 +94,16 @@ exports['Inspect:'] = {
 	'Indentation': function () {
 		var input = {a:{b:{c:2}}}
 
-		var actual = inspect(input, {maxLevels:0})
+		var actual = inspect(input, {maxLevels: null})
 		var expected =
 			'{\n' +
-			'  a:{\n' +
-			'    b:{\n' +
-			'      c:2\n' +
+			'  a: {\n' +
+			'    b: {\n' +
+			'      c: 2\n' +
 			'    }\n' +
 			'  }\n' +
 			'}'
+console.log(actual)
 		assert.equal(actual, expected, arguments.callee.name)
 	},
 	'FunctionProperty': function () {
@@ -110,7 +111,7 @@ exports['Inspect:'] = {
 		input.prop = 5
 		var expected =
 			'function a(a) {\n' +
-			'  prop:5\n' +
+			'  prop: 5\n' +
 			'}'
 		var actual = inspect(input)
 		assert.equal(actual, expected, arguments.callee.name)
@@ -120,19 +121,19 @@ exports['Inspect:'] = {
 		input.field = input
 		var expected =
 			'{\n' +
-			'  field:recursive-object#1\n' +
+			'  field: recursive-object#1\n' +
 			'}'
 		var actual = inspect(input)
 		assert.equal(actual, expected, arguments.callee.name)
 	},
-	'OptionNoArrayLength': function () {
+	'Option NoArrayLength': function () {
 		var input = [5]
 		var expected = '[5]'
 		var actual = inspect(input, {noArrayLength:true})
 
 		assert.equal(actual, expected, arguments.callee.name)
 	},
-	'OptionMaxString': function () {
+	'Option MaxString': function () {
 		var input = 'abc'
 
 		var actual = inspect(input)
@@ -143,14 +144,14 @@ exports['Inspect:'] = {
 		var expected = '\'ab...\''
 		assert.equal(actual, expected, arguments.callee.name)
 	},
-	'OptionMaxProperties': function () {
+	'Option MaxProperties': function () {
 		var tests = {
-			'unabbreviated object': { value: {0:'a', 1:'B', 2:'C', 4:'D'}, expected: '{\n  0:\'a\',\n  1:\'B\',\n  2:\'C\',\n  4:\'D\'\n}'},
-			'abbreviated object': { value: {0:'a', 1:'b', 2:'c', 3:'d'}, expected: '{\n  0:\'a\',\n  ...,\n  3:\'d\'\n}'},
-			'unabbreviated array': { value: [1], expected: '1:[1]'},
-			'at-limit array': { value: [1, 2], expected: '2:[1, 2]'},
-			'still unabbreviated array': { value: [1, 2, 3], expected: '3:[1, 2, 3]'},
-			'abbreviated array': { value: [1, 2, 3, 4], expected: '4:[1, ..., 4]'},
+			'unabbreviated object': { value: {0:'a', 1:'B', 2:'C', 4:'D'}, expected: '{\n  0: \'a\',\n  1: \'B\',\n  2: \'C\',\n  4: \'D\'\n}'},
+			'abbreviated object': { value: {0:'a', 1:'b', 2:'c', 3:'d'}, expected: '{\n  0: \'a\',\n  ...,\n  3: \'d\'\n}'},
+			'unabbreviated array': { value: [1], expected: '1[1]'},
+			'at-limit array': { value: [1, 2], expected: '2[1, 2]'},
+			'still unabbreviated array': { value: [1, 2, 3], expected: '3[1, 2, 3]'},
+			'abbreviated array': { value: [1, 2, 3, 4], expected: '4[1, ..., 4]'},
 		}
 
 		for (var testName in tests) {
@@ -159,14 +160,14 @@ exports['Inspect:'] = {
 			assert.equal(actual, testObject.expected, arguments.callee.name + ':' + testName)
 		}
 	},
-	'OptionMaxLevels': function () {
+	'Option MaxLevels': function () {
 		var input = {a:{b:2}}
 
 		var actual = inspect(input)
 		var expected =
 			'{\n' +
-			'  a:{\n' +
-			'    b:2\n' +
+			'  a: {\n' +
+			'    b: 2\n' +
 			'  }\n' +
 			'}'
 		assert.equal(actual, expected, arguments.callee.name)
@@ -174,31 +175,43 @@ exports['Inspect:'] = {
 		var actual = inspect(input, {maxLevels:1})
 		var expected =
 			'{\n' +
-			'  a:{...}\n' +
+			'  a: {...}\n' +
 			'}'
+		assert.equal(actual, expected, arguments.callee.name)
+
+		var actual = inspect(input, {maxLevels:0})
+		var expected =
+			'{...}'
+		assert.equal(actual, expected, arguments.callee.name)
+	},
+	'Option singleLine': function () {
+		var input = {a: {b: 2}}
+		var expected = '{a: {b: 2}}'
+
+		var actual = inspect(input, {singleLine: true})
 		assert.equal(actual, expected, arguments.callee.name)
 	},
 }
-exports['NonEnumerable Option:'] = {
+exports['Option NonEnumerable:'] = {
 	'Primitive Objects': function () {
 		var input = Object(false)
-		var expected = 'Object(false) {\n  -- prototype:Boolean,\n  (nonE)valueOf:function valueOf(),\n  (nonE)toString:function toString()\n}'
+		var expected = 'Object(false) {\n  -- prototype: Boolean,\n  (nonE)valueOf: function valueOf(),\n  (nonE)toString: function toString()\n}'
 		var actual = inspect(input, {nonEnum:true})
 		assert.equal(actual, expected, arguments.callee.name)
 
 		var input = Object(5)
-		var expected = 'Object(5) {\n  -- prototype:Number,\n  (nonE)toFixed:function toFixed(),\n  (nonE)toLocaleString:function toLocaleString(),\n  (nonE)valueOf:function valueOf(),\n  (nonE)toPrecision:function toPrecision(),\n  (nonE)toString:function toString(),\n  (nonE)toExponential:function toExponential()\n}'
+		var expected = 'Object(5) {\n  -- prototype: Number,\n  (nonE)toFixed: function toFixed(),\n  (nonE)toLocaleString: function toLocaleString(),\n  (nonE)valueOf: function valueOf(),\n  (nonE)toPrecision: function toPrecision(),\n  (nonE)toString: function toString(),\n  (nonE)toExponential: function toExponential()\n}'
 		var actual = inspect(input, {nonEnum:true})
 		assert.equal(actual, expected, arguments.callee.name)
 
 		var input = Object('abc')
-		var expected = 'Object(\'abc\'),\n  (nonE)length:3,\n  -- prototype:String,\n  (nonE)fontcolor:function fontcolor(),\n  (nonE)localeCompare:function localeCompare(),\n  (nonE)big:function big(),\n  (nonE)lastIndexOf:function lastIndexOf(),\n  (nonE)replace:function replace(),\n  (nonE)fontsize:function fontsize(),\n  (nonE)charCodeAt:function charCodeAt(),\n  (nonE)trimRight:function trimRight(),\n  (nonE)blink:function blink(),\n  (nonE)search:function search(),\n  (nonE)concat:function concat(),\n  (nonE)trimLeft:function trimLeft(),\n  (nonE)substring:function substring(),\n  (nonE)charAt:function charAt(),\n  (nonE)small:function small(),\n  (nonE)valueOf:function valueOf(),\n  (nonE)toLocaleUpperCase:function toLocaleUpperCase(),\n  (nonE)slice:function slice(),\n  (nonE)split:function split(),\n  (nonE)sup:function sup(),\n  (nonE)indexOf:function indexOf(),\n  (nonE)trim:function trim(),\n  (nonE)bold:function bold(),\n  (nonE)toString:function toString(),\n  (nonE)fixed:function fixed(),\n  (nonE)sub:function sub(),\n  (nonE)strike:function strike(),\n  (nonE)toLocaleLowerCase:function toLocaleLowerCase(),\n  (nonE)length:0,\n  (nonE)link:function link(),\n  (nonE)anchor:function anchor(),\n  (nonE)italics:function italics(),\n  (nonE)toLowerCase:function toLowerCase(),\n  (nonE)substr:function substr(),\n  (nonE)match:function match(),\n  (nonE)toUpperCase:function toUpperCase()\n}'
+		var expected = 'Object(\'abc\'),\n  (nonE)length: 3,\n  -- prototype: String,\n  (nonE)fontcolor: function fontcolor(),\n  (nonE)localeCompare: function localeCompare(),\n  (nonE)big: function big(),\n  (nonE)lastIndexOf: function lastIndexOf(),\n  (nonE)replace: function replace(),\n  (nonE)fontsize: function fontsize(),\n  (nonE)charCodeAt: function charCodeAt(),\n  (nonE)trimRight: function trimRight(),\n  (nonE)blink: function blink(),\n  (nonE)search: function search(),\n  (nonE)concat: function concat(),\n  (nonE)trimLeft: function trimLeft(),\n  (nonE)substring: function substring(),\n  (nonE)charAt: function charAt(),\n  (nonE)small: function small(),\n  (nonE)valueOf: function valueOf(),\n  (nonE)toLocaleUpperCase: function toLocaleUpperCase(),\n  (nonE)slice: function slice(),\n  (nonE)split: function split(),\n  (nonE)sup: function sup(),\n  (nonE)indexOf: function indexOf(),\n  (nonE)trim: function trim(),\n  (nonE)bold: function bold(),\n  (nonE)toString: function toString(),\n  (nonE)fixed: function fixed(),\n  (nonE)sub: function sub(),\n  (nonE)strike: function strike(),\n  (nonE)toLocaleLowerCase: function toLocaleLowerCase(),\n  (nonE)length: 0,\n  (nonE)link: function link(),\n  (nonE)anchor: function anchor(),\n  (nonE)italics: function italics(),\n  (nonE)toLowerCase: function toLowerCase(),\n  (nonE)substr: function substr(),\n  (nonE)match: function match(),\n  (nonE)toUpperCase: function toUpperCase()\n}'
 		var actual = inspect(input, {nonEnum:true})
 		assert.equal(actual, expected, arguments.callee.name)
 	},
 	'Object object': function () {
 		var input = {a: 1}
-		var expected = '{\n  a:1\n}'
+		var expected = '{\n  a: 1\n}'
 		var actual = inspect(input, {nonEnum:true})
 		assert.equal(actual, expected, arguments.callee.name)
 	},
@@ -210,7 +223,7 @@ exports['NonEnumerable Option:'] = {
 	},
 	'Array': function () {
 		var input = [5]
-		var expected = '1:[5, (nonE)length:1]'
+		var expected = '1[5, (nonE)length: 1]'
 		var actual = inspect(input, {nonEnum:true})
 		assert.equal(actual, expected, arguments.callee.name)
 	},
@@ -222,7 +235,7 @@ exports['NonEnumerable Option:'] = {
 	},
 	'RegExp': function () {
 		var input = /5/g
-		var expected = '/5/g {\n  (nonE)lastIndex:0,\n  (nonE)global:true,\n  (nonE)source:\'5\',\n  (nonE)ignoreCase:false,\n  (nonE)multiline:false\n}'
+		var expected = '/5/g {\n  (nonE)lastIndex: 0,\n  (nonE)global: true,\n  (nonE)source: \'5\',\n  (nonE)ignoreCase: false,\n  (nonE)multiline: false\n}'
 		var actual = inspect(input, {nonEnum:true})
 		assert.equal(actual, expected, arguments.callee.name)
 	},
@@ -230,15 +243,15 @@ exports['NonEnumerable Option:'] = {
 		var input = Error('abc')
 		var expected0 =
 			'object:Error {\n' +
-			'  (nonE)(get)stack:Error: abc,\n' + spaces(6) + 'at '
+			'  (nonE)(get)stack: Error: abc,\n' + spaces(6) + 'at '
 		var expected1 =
-			'  (nonE)type:undefined,\n' +
-			'  (nonE)message:\'abc\',\n' +
-			'  (nonE)arguments:undefined,\n' +
-			'  -- prototype:Error,\n' +
-			'  (nonE)name:\'Error\',\n' +
-			'  (nonE)message:\'\',\n' +
-			'  (nonE)toString:function toString()\n' +
+			'  (nonE)type: undefined,\n' +
+			'  (nonE)message: \'abc\',\n' +
+			'  (nonE)arguments: undefined,\n' +
+			'  -- prototype: Error,\n' +
+			'  (nonE)name: \'Error\',\n' +
+			'  (nonE)message: \'\',\n' +
+			'  (nonE)toString: function toString()\n' +
       			'}'
 		var actual = inspect(input, {nonEnum:true, maxString:0})
 		var a0 = actual.substring(0, expected0.length)
@@ -248,7 +261,7 @@ exports['NonEnumerable Option:'] = {
 	},
 	'JSON': function () {
 		var input = JSON
-		var expected = '{\n  (nonE)parse:function parse(),\n  (nonE)stringify:function stringify()\n}'
+		var expected = '{\n  (nonE)parse: function parse(),\n  (nonE)stringify: function stringify()\n}'
 		var actual = inspect(input, {nonEnum:true})
 		assert.equal(actual, expected, arguments.callee.name)
 	},
@@ -258,7 +271,7 @@ exports['NonEnumerable Option:'] = {
 			setBufferContent(input)
 			setBufferContent(input.parent)
 			var i = input.parent
-			var expected = util.format('object:Buffer {\n  0:5,\n  1:6,\n  2:7,\n  3:8,\n  4:9,\n  ...,\n  9:99,\n  parent:object:SlowBuffer {\n    0:5,\n    1:6,\n    2:7,\n    3:8,\n    4:9,\n    ...,\n    8191:99,\n    used:%s,\n    length:8192\n  },\n  length:10,\n  offset:%s\n}',
+			var expected = util.format('object:Buffer {\n  0: 5,\n  1: 6,\n  2: 7,\n  3: 8,\n  4: 9,\n  ...,\n  9: 99,\n  parent: object:SlowBuffer {\n    0: 5,\n    1: 6,\n    2: 7,\n    3: 8,\n    4: 9,\n    ...,\n    8191: 99,\n    used: %s,\n    length: 8192\n  },\n  length: 10,\n  offset: %s\n}',
 				input.parent.used,
 				input.offset)
 			var actual = inspect(input, {nonEnum:true, maxProperties: 5})
@@ -275,7 +288,7 @@ exports['NonEnumerable Option:'] = {
 		input.__defineGetter__('get', function getter() { return 5})
 		var expected =
 			'{\n' +
-			'  (get)get:5\n' +
+			'  (get)get: 5\n' +
 			'}'
 		var actual = inspect(input, {nonEnum:true})
 		assert.equal(actual, expected, arguments.callee.name)
@@ -295,11 +308,11 @@ exports['NonEnumerable Option:'] = {
 
 		var expected =
 			'object:B {\n' +
-			'  bfield:\'bField\',\n' +
-			'  -- prototype:B,\n' +
-			'  bp:\'BPrototypeField\',\n' +
-			'  -- prototype:A,\n' +
-			'  ap:\'APrototypeField\'\n' +
+			'  bfield: \'bField\',\n' +
+			'  -- prototype: B,\n' +
+			'  bp: \'BPrototypeField\',\n' +
+			'  -- prototype: A,\n' +
+			'  ap: \'APrototypeField\'\n' +
 			'}'
 
 		var actual = inspect(b, {nonEnum:true})

@@ -6,11 +6,20 @@ var createkey = require('../lib/createkey')
 var assert = require('mochawrapper')
 
 exports['Create Key:'] = {
-	'Create key': function () {
+	'Same': function () {
+		var a1 = 'a'
+		var a2 = 'a'
+
+		var a1key = createkey.createKey(a1, a2)
+		var a2key = createkey.createKey(a2, a1)
+		assert.equal(a1key, a2key)
+	},
+	'Different': function () {
 		var a1 = 'a'
 		var a2 = 'b'
-		var expected = 'Q_' + a1 + 'Q_' + a2
-		var actual = createkey.createKey('a', 'b')
-		assert.equal(actual, expected)
+
+		var a1key = createkey.createKey(a1, a2)
+		var a2key = createkey.createKey(a2, a1)
+		assert.notEqual(a1key, a2key)
 	},
 }
