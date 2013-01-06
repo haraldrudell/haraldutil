@@ -8,6 +8,16 @@ var realPath = '../../lib/haraldutil'
 
 var demos = [
 
+function pp(require) {
+var pp = require('haraldutil').pp
+
+someFunction()
+
+function someFunction() {
+	pp(console)
+}
+},
+
 function p(require) {
 var p = require('haraldutil').p
 

@@ -2,7 +2,7 @@
 	"name": "haraldutil",
 	"description": "Utility functions for date and logging by Harald Rudell",
 	"author": "Harald Rudell <harald@allgoodapps.com> (http://www.haraldrudell.com)",
-	"version": "0.1.14",
+	"version": "0.1.15",
 	"keywords": [
 		"timestamp",
 		"error",

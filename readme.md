@@ -19,7 +19,7 @@ Utility functions for time, errors, numbers and more.
 
 # Reference
 
-### p(...)
+### p(...), ps()
 Printout with code location and inspect of values
 ```js
 var p = require('haraldutil').p
@@ -37,6 +37,8 @@ examples:14:p 'Printouts start with code location: file:line:function'
 examples:15:p 'In an anonymous function, the function name is omitted'
 examples:19:someFunction 'Value examples:' undefined '1' object:Class {a: 1} function stringify() Error: a
 ```
+* return value: the string
+* ps is like p, but omits the console.log
 
 ### pargs(arguments)
 Prints the argument list for a function
@@ -54,6 +56,34 @@ function LogPrinter() {
 ```
 examples:30:LogPrinter undefined 'abc' {a: 1, b: 2} Error: a
 ```
+
+### pp(...), pps()
+Printout with code location and exhaustive inspect of values
+```js
+var pp = require('haraldutil').pp
+
+someFunction()
+
+function someFunction() {
+  pp(console)
+}
+```
+```
+examples:17:someFunction {
+  info: function (),
+  log: recursive-object#2,
+  error: function (),
+  time: function (label),
+  warn: recursive-object#3,
+  dir: function (object),
+  trace: function (label),
+  assert: function (expression),
+  timeEnd: function (label)
+}
+```
+* return value: the string
+* pps is like pp, but omits the console.log
+
 ### inspectDeep(v)
 Provides prototype chains, and unlimited strings. Abbreviates array-type properties at 10 elements.
 
