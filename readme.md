@@ -59,7 +59,7 @@ function LogPrinter() {
 examples:30:LogPrinter undefined 'abc' {a: 1, b: 2} Error: a
 ```
 
-## pPrepend(str)
+### pPrepend(str)
 Add a lead-in to functions p, ps, pargs, pp, pps
 ```js
 var haraldutil = require('haraldutil')
@@ -214,11 +214,12 @@ console.log('Home folder:', haraldutil.getHomeFolder())
 Home folder: /home/foxyboy
 ```
 
-### getHomeFolder()
+### getTmpFolder()
 Get path to a folder for temporary files
 ```js
 var haraldutil = require('haraldutil')
 console.log('Tmp folder:', haraldutil.getTmpFolder())
+```
 ```
 Tmp folder: /home/foxyboy/tmp
 ```
