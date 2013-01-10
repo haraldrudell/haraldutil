@@ -11,25 +11,11 @@ var path = require('path')
 // https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
 
-var exportsCount = 6
-var testedModuleType = 'object'
-var exportsTypes = {}
-
 var cl = console.log
 
 exports['P:'] = {
 	'Exports': function () {
-
-		// if export count changes, we need to write more tests
-		assert.equal(typeof testedModule, testedModuleType, 'Module type incorrect')
-		assert.equal(Object.keys(testedModule).length, exportsCount, 'Export count changed')
-
-		// all exports function
-		for (var exportName in testedModule) {
-			var actual = typeof testedModule[exportName]
-			var expected = exportsTypes[exportName] || 'function'
-			assert.equal(actual, expected, 'Incorrect type of export ' + exportName)
-		}
+		assert.exportsTest(p, 6)
 	},
 	'P': function () {
 		var aLogs = 0
@@ -83,9 +69,9 @@ exports['P:'] = {
 	'PS': function () {
 		var aLogs = 0
 		var expected0 = path.basename(__filename, path.extname(__filename)) + ':'
-		var expected1 = ':' + this.test.title + ' {a: 1}'
+		var expected1 = ':' + this.test.title + ' {a: 1} \'abc\''
 
-		var actual = p.ps({a: 1})
+		var actual = p.ps({a: 1}, 'abc')
 
 		assert.equal(typeof actual, 'string')
 		assert.equal(actual.substring(0, expected0.length), expected0)
@@ -216,9 +202,9 @@ exports['P:'] = {
 	'PPS': function () {
 		var aLogs = 0
 		var expected0 = path.basename(__filename, path.extname(__filename)) + ':'
-		var expected1 = ':' + this.test.title + ' {\n  a: 1\n}'
+		var expected1 = ':' + this.test.title + ' {\n  a: 1\n} \'abc\''
 
-		var actual = p.pps({a: 1})
+		var actual = p.pps({a: 1}, 'abc')
 
 		assert.equal(typeof actual, 'string')
 		assert.equal(actual.substring(0, expected0.length), expected0)
