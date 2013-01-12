@@ -20,7 +20,7 @@ Utility functions for time, errors, numbers and more.
 # Reference
 
 ### p(...), ps()
-Printout with code location and inspect of values
+Console.log equivalent with added leading code location
 ```js
 var p = require('haraldutil').p
 
@@ -35,32 +35,38 @@ function someFunction() {
 }
 ```
 ```
-examples:14:p 'Printouts start with code location: file:line:function'
-examples:15:p 'In an anonymous function, the function name is omitted'
-examples:19:someFunction 'Value examples:' undefined '1' object:Class {a: 1} function stringify() Error: a
+examples:15 Printouts start with code location: file:line:function
+examples:16 In an anonymous function like here, the function name is omitted
+examples:20:someFunction Leading string does format [object Object] NaN {"a":1}
+examples:21:someFunction undefined '1' { a: 1 } [Function: stringify] [Error: a]
 ```
 * return value: the string
 * ps is like p, but omits the console.log
+```js
+console.log('ps is p without logging, it can output location:', ps())
+```
+```
+ps is p without logging, it can output location: examples:28
+```
 
 ### pargs(arguments)
-Prints the argument list for a function
+Prints haraldutil.inspect of the argument list for a function
 ```js
 var haraldutil = require('haraldutil')
 var pargs = haraldutil.pargs
 
-LogPrinter(undefined, 'abc', {a: 1, b: 2}, new Error('a'))
+someFunction(undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
 
-function LogPrinter() {
+function someFunction() {
   pargs(arguments)
 }
-
 ```
 ```
-examples:30:LogPrinter undefined 'abc' {a: 1, b: 2} Error: a
+examples:38:someFunction undefined, '1', object:Class {a: 1}, function stringify(), Error: a
 ```
 
 ### pPrepend(str)
-Add a lead-in to functions p, ps, pargs, pp, pps
+pPrepend adds a lead-in to functions p, ps, pargs, q, qs, pp and pps
 ```js
 var haraldutil = require('haraldutil')
 var p = haraldutil.p
@@ -73,14 +79,31 @@ pPrepend(require('os').hostname() + ':' + process.pid)
 p('Launching on new host')
 ```
 ```
-8398:examples:53:pPrepend 'Launching of new process'
-c505:8398:examples:56:pPrepend 'Launching on new host'
+19854:examples:51 'Launching of new process'
+somehostname:19854:examples:54 'Launching on new host'
 ```
-* null: gets the current prepend value
-* undefined: removes the current prepend value
+* pPrepend(): removes the current prepend value
+* pPrepend(null): gets the current prepend value
 
-### pp(...), pps()
-Printout with code location and exhaustive inspect of values
+### q(...), qs(...)
+q and qs does a more detailed haraldutil.inspect.
+```js
+var q = require('haraldutil').q
+
+someFunction()
+
+function someFunction() {
+  q('q and qs are like p and ps but does haraldutil.inspect rather then util.format')
+  q(undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
+}
+```
+```
+examples:61:someFunction 'q and qs are like p and ps but does haraldutil.inspect rather then util.format'
+examples:62:someFunction undefined '1' object:Class {a: 1} function stringify() Error: a
+```
+
+### pp(...), pps(...)
+Printout with code location and exhaustive inspect of values.
 ```js
 var pp = require('haraldutil').pp
 

@@ -3,45 +3,43 @@
 // © Harald Rudell 2012
 
 var realPath = '../../lib/haraldutil'
+var pPrepend = require(realPath).pPrepend
 
 // code
 
 var demos = [
 
-function pp(require) {
-var pp = require('haraldutil').pp
-
+function (require) {
+var p = require('haraldutil').p
+debugger
+p('Printouts start with code location: file:line:function')
+p('In an anonymous function like here, the function name is omitted')
 someFunction()
 
 function someFunction() {
-	pp(console)
+	p('Leading string does format %s %d %j', {a:1}, {a:1}, {a:1})
+	p(undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
 }
 },
 
-function p(require) {
-var p = require('haraldutil').p
+function (require) {
+var ps = require('haraldutil').ps
 
-p('Printouts start with code location: file:line:function')
-p('In an anonymous function, the function name is omitted')
-someFunction()
-
-function someFunction() {
-	p('Value examples:', undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
-}
+console.log('ps is p without logging, it can output location:', ps())
 },
 
 function pargs(require) {
 var haraldutil = require('haraldutil')
 var pargs = haraldutil.pargs
 
-LogPrinter(undefined, 'abc', {a: 1, b: 2}, new Error('a'))
+someFunction(undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
 
-function LogPrinter() {
+function someFunction() {
 	pargs(arguments)
 }
 },
 
-function pPrepend(require) {
+function (require) {
 var haraldutil = require('haraldutil')
 var p = haraldutil.p
 var pPrepend = haraldutil.pPrepend
@@ -55,14 +53,23 @@ p('Launching on new host')
 },
 
 function (require) {
-var haraldutil = require('haraldutil')
-var p = haraldutil.p
+var q = require('haraldutil').q
 
-p('Leading source filename and line number, but no function name')
-LogPrinter()
+someFunction()
 
-function LogPrinter() {
-	p('Source filename, line number and function name')
+function someFunction() {
+	q('q and qs are like p and ps but does haraldutil.inspect rather then util.format')
+	q(undefined, '1', new function Class() {this.a = 1}, JSON.stringify, new Error('a'))
+}
+},
+
+function pp(require) {
+var pp = require('haraldutil').pp
+
+someFunction()
+
+function someFunction() {
+	pp(console)
 }
 },
 
@@ -149,17 +156,29 @@ console.log('The world will come to an end in:', haraldutil.periodString(1e7))
 
 ]
 
+/*
+demos is the array of example functions
+
+provide each example function to demonstrate
+*/
 demos.forEach(function (f) {
 	demonstrate(f, realPath)
 })
 
 // utility
 
+/*
+Execute a demo function, print its source and output
+func: a demo function
+relative: the fully qualified path to where haraldutil can be found
+*/
 function demonstrate(func, relative) {
-	console.log('\n===== ' + func.name + '\n')
+	console.log('\n=====', func.name)
 	console.log(getSource(func))
 	console.log()
+	// myRequire is a function that will load haraldutil from our lib folder
 	func(myRequire(relative))
+	pPrepend()
 }
 
 function getSource(func) {
@@ -171,6 +190,9 @@ function getSource(func) {
 // mock require
 function myRequire(relative) {
 	return function requireWrapper(module) {
-		return require(relative)
+		var result
+		if (module == 'os') result = {hostname: function () {return 'somehostname'}}
+		else result = require(relative)
+		return result
 	}
 }
