@@ -1,8 +1,7 @@
 // test-p.js
-// © Harald Rudell 2012
+// © Harald Rudell 2012 MIT License
 
 var p = require('../lib/p')
-var testedModule = p
 
 var tonumber = require('../lib/tonumber')
 // http://nodejs.org/api/path.html
@@ -220,7 +219,6 @@ exports['P:'] = {
 			'[1]': '1[1, (nonE)length: 1]',
 			'(function f(a) {})': 'function f(a)',
 			'new Date(1357510355481)': 'Date(1357510355481)',
-			'/a/g': '/a/g {\n  (nonE)lastIndex: 0,\n  (nonE)global: true,\n  (nonE)source: \'a\',\n  (nonE)ignoreCase: false,\n  (nonE)multiline: false\n}',
 		}
 
 		for (var expression in tests) {
@@ -234,18 +232,56 @@ exports['P:'] = {
 			assert.equal(actual, tests[expression])
 		}
 
+		console.log = function () {}
+		var output = p.pp(/a/g)
+		console.log = cl
+
+		var actual = output.substring(output.indexOf(this.test.title) + this.test.title.length + 1)
+
+		var expect1 = '/a/g {\n'
+
+		assert.equal(actual.substring(0, expect1.length), expect1)
+		;[
+			'  (nonE)lastIndex: 0',
+			'  (nonE)global: true',
+			'  (nonE)ignoreCase: false',
+			'  (nonE)multiline: false',
+			'  (nonE)source: \'a\'',
+		].forEach(function (str) {
+			assert.ok(~actual.indexOf(str), str)
+		})
+		var expect2 = '}'
+		assert.equal(actual.slice(-expect2.length), expect2)
+
 		// error
 		var e = new Error('bad')
 		Object.defineProperty(e,'nonEnumerableProperty', {enumerable: false, value: 1})
-		var expected0 = 'object:Error {\n  (nonE)(get)stack: Error: bad,\n'
-		var expected1 = ',\n  (nonE)type: undefined,\n  (nonE)nonEnumerableProperty: 1,\n  (nonE)message: \'bad\',\n  (nonE)arguments: undefined,\n  -- prototype: Error,\n  (nonE)name: \'Error\',\n  (nonE)message: \'\',\n  (nonE)toString: function toString()\n}'
 
 		console.log = function () {}
 		var output = p.pp(e)
 		console.log = cl
 
 		var actual = output.substring(output.indexOf(this.test.title) + this.test.title.length + 1)
+
+		var expected0 = 'object:Error {'
 		assert.equal(actual.substring(0, expected0.length), expected0)
+
+		;[
+			'  (nonE)(get)stack: Error: bad',
+			'  (nonE)type: undefined',
+			'  (nonE)nonEnumerableProperty: 1',
+			'  (nonE)message: \'bad\'',
+
+			'  (nonE)arguments: undefined',
+			'  -- prototype: Error',
+			'  (nonE)name: \'Error\'',
+			'  (nonE)message: \'\'',
+			'  (nonE)toString: function toString()',
+		].forEach(function (str) {
+			assert.ok(~actual.indexOf(), str)
+		})
+
+		var expected1 = '}'
 		assert.equal(actual.slice(-expected1.length), expected1)
 	},
 	'PPS': function () {

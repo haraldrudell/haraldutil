@@ -1,15 +1,20 @@
 // test-browseto.js
-// © Harald Rudell 2012
+// © Harald Rudell 2012 MIT License
 
 var browseto = require('../lib/browseto')
+
 // http://nodejs.org/api/child_process.html
 var child_process = require('child_process')
+
 // https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
 
 var _spawn
 
 exports['BrowseTo:'] = {
+	'Exports': function () {
+		assert.exportsTest(browseto, 1)
+	},
 	'before': function () {
 		_spawn = child_process.spawn
 	},

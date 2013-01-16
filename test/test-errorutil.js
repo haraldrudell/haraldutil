@@ -1,13 +1,18 @@
 // test-errorutil.js
-// © Harald Rudell 2012
+// © Harald Rudell 2012 MIT License
 
 var errorutil = require ('../lib/errorutil')
+
 // http://nodejs.org/api/path.html
 var path = require('path')
+
 // https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
 
 exports['EToString:'] = {
+	'Exports': function () {
+		assert.exportsTest(errorutil, 3)
+	},
 	'non-Error argument': function () {
 		var input = 5
 		var expected = String(input)

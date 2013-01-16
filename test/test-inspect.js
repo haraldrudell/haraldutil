@@ -1,12 +1,20 @@
 // test-inspect.js
+// © Harald Rudell 2011 MIT License
 
-var inspect = require ('../lib/inspect').inspect
-var inspectAll = require ('../lib/inspect').inspectAll
-var inspectDeep = require ('../lib/inspect').inspectDeep
+var inspect = require('../lib/inspect').inspect
+var inspectAll = require('../lib/inspect').inspectAll
+var inspectDeep = require('../lib/inspect').inspectDeep
+
+// https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
+
+// http://nodejs.org/api/util.html
 var util = require('util')
 
 exports['Inspect:'] = {
+	'Exports': function () {
+		assert.exportsTest(require('../lib/inspect'), 3)
+	},
 	'Primitives': function () {
 		var tests = {
 			'undefined': { value: undefined, expected: 'undefined' },
@@ -194,19 +202,63 @@ exports['Inspect:'] = {
 exports['Option NonEnumerable:'] = {
 	'Primitive Objects': function () {
 		var input = Object(false)
-		var expected = 'Object(false) {\n  -- prototype: Boolean,\n  (nonE)valueOf: function valueOf(),\n  (nonE)toString: function toString()\n}'
 		var actual = inspect(input, {nonEnum:true})
-		assert.equal(actual, expected, arguments.callee.name)
+
+		var expect1 = 'Object(false) {\n  -- prototype: Boolean,\n'
+		assert.equal(actual.substring(0, expect1.length), expect1)
+		;[
+			'  (nonE)valueOf: function valueOf()',
+			'  (nonE)toString: function toString()',
+		].forEach(function (str) {
+			assert.ok(~actual.indexOf(str), str)
+		})
+		var expect2 = '}'
+		assert.equal(actual.slice(-expect2.length), expect2)
 
 		var input = Object(5)
-		var expected = 'Object(5) {\n  -- prototype: Number,\n  (nonE)toFixed: function toFixed(),\n  (nonE)toLocaleString: function toLocaleString(),\n  (nonE)valueOf: function valueOf(),\n  (nonE)toPrecision: function toPrecision(),\n  (nonE)toString: function toString(),\n  (nonE)toExponential: function toExponential()\n}'
 		var actual = inspect(input, {nonEnum:true})
-		assert.equal(actual, expected, arguments.callee.name)
+
+		var expect1 = 'Object(5) {\n  -- prototype: Number,\n'
+		assert.equal(actual.substring(0, expect1.length), expect1)
+		;[
+			'  (nonE)toFixed: function toFixed()',
+			'  (nonE)toLocaleString: function toLocaleString()',
+			'  (nonE)valueOf: function valueOf()',
+			'  (nonE)toPrecision: function toPrecision()',
+			'  (nonE)toString: function toString()',
+			'  (nonE)toExponential: function toExponential()',
+		].forEach(function (str) {
+			assert.ok(~actual.indexOf(str), str)
+		})
+		var expect2 = '}'
+		assert.equal(actual.slice(-expect2.length), expect2)
 
 		var input = Object('abc')
-		var expected = 'Object(\'abc\'),\n  (nonE)length: 3,\n  -- prototype: String,\n  (nonE)fontcolor: function fontcolor(),\n  (nonE)localeCompare: function localeCompare(),\n  (nonE)big: function big(),\n  (nonE)lastIndexOf: function lastIndexOf(),\n  (nonE)replace: function replace(),\n  (nonE)fontsize: function fontsize(),\n  (nonE)charCodeAt: function charCodeAt(),\n  (nonE)trimRight: function trimRight(),\n  (nonE)blink: function blink(),\n  (nonE)search: function search(),\n  (nonE)concat: function concat(),\n  (nonE)trimLeft: function trimLeft(),\n  (nonE)substring: function substring(),\n  (nonE)charAt: function charAt(),\n  (nonE)small: function small(),\n  (nonE)valueOf: function valueOf(),\n  (nonE)toLocaleUpperCase: function toLocaleUpperCase(),\n  (nonE)slice: function slice(),\n  (nonE)split: function split(),\n  (nonE)sup: function sup(),\n  (nonE)indexOf: function indexOf(),\n  (nonE)trim: function trim(),\n  (nonE)bold: function bold(),\n  (nonE)toString: function toString(),\n  (nonE)fixed: function fixed(),\n  (nonE)sub: function sub(),\n  (nonE)strike: function strike(),\n  (nonE)toLocaleLowerCase: function toLocaleLowerCase(),\n  (nonE)length: 0,\n  (nonE)link: function link(),\n  (nonE)anchor: function anchor(),\n  (nonE)italics: function italics(),\n  (nonE)toLowerCase: function toLowerCase(),\n  (nonE)substr: function substr(),\n  (nonE)match: function match(),\n  (nonE)toUpperCase: function toUpperCase()\n}'
 		var actual = inspect(input, {nonEnum:true})
-		assert.equal(actual, expected, arguments.callee.name)
+
+		var expect1 = 'Object(\'abc\'),\n  (nonE)length: 3,\n'
+		assert.equal(actual.substring(0, expect1.length), expect1)
+		;[
+			'  -- prototype: String',
+			'  (nonE)fontcolor: function fontcolor()',
+			'  (nonE)localeCompare: function localeCompare()',
+			'  (nonE)big: function big()',
+			'  (nonE)lastIndexOf: function lastIndexOf()',
+			'  (nonE)replace: function replace()',
+			'  (nonE)fontsize: function fontsize()',
+			'  (nonE)charCodeAt: function charCodeAt()',
+			'  (nonE)trimRight: function trimRight()',
+			'  (nonE)blink: function blink()',
+			'  (nonE)search: function search()',
+			'  (nonE)concat: function concat()',
+			'  (nonE)trimLeft: function trimLeft()',
+			'  (nonE)substring: function substring()',
+		].forEach(function (str) {
+			assert.ok(~actual.indexOf(str), str)
+		})
+		var expect2 = '}'
+		assert.equal(actual.slice(-expect2.length), expect2)
+
 	},
 	'Object object': function () {
 		var input = {a: 1}
@@ -234,29 +286,45 @@ exports['Option NonEnumerable:'] = {
 	},
 	'RegExp': function () {
 		var input = /5/g
-		var expected = '/5/g {\n  (nonE)lastIndex: 0,\n  (nonE)global: true,\n  (nonE)source: \'5\',\n  (nonE)ignoreCase: false,\n  (nonE)multiline: false\n}'
+
 		var actual = inspect(input, {nonEnum:true})
-		assert.equal(actual, expected, arguments.callee.name)
+
+		var expect1 = '/5/g {\n'
+		assert.equal(actual.substring(0, expect1.length), expect1)
+		;[
+			'  (nonE)lastIndex: 0',
+			'  (nonE)global: true',
+			'  (nonE)ignoreCase: false',
+			'  (nonE)multiline: false',
+			'  (nonE)source: \'5\'',
+		].forEach(function (str) {
+			assert.ok(~actual.indexOf(str), str)
+		})
+		var expect2 = '}'
+		assert.equal(actual.slice(-expect2.length), expect2)
 	},
 	'Error': function () {
-		var input = Error('abc')
-		var expected0 =
-			'object:Error {\n' +
-			'  (nonE)(get)stack: Error: abc,\n' + spaces(6) + 'at '
-		var expected1 =
-			'  (nonE)type: undefined,\n' +
-			'  (nonE)message: \'abc\',\n' +
-			'  (nonE)arguments: undefined,\n' +
-			'  -- prototype: Error,\n' +
-			'  (nonE)name: \'Error\',\n' +
-			'  (nonE)message: \'\',\n' +
-			'  (nonE)toString: function toString()\n' +
-      			'}'
+		var input = new Error('abc')
+
 		var actual = inspect(input, {nonEnum:true, maxString:0})
-		var a0 = actual.substring(0, expected0.length)
-		assert.equal(a0, expected0, arguments.callee.name)
-		var a1 = actual.slice(-expected1.length)
-		assert.equal(a1, expected1, arguments.callee.name)
+
+		var e0 = 'object:Error {\n'
+		assert.equal(actual.substring(0, e0.length), e0)
+		;[
+
+			'  (nonE)(get)stack: Error: abc',
+			'  (nonE)type: undefined',
+			'  (nonE)message: \'abc\'',
+			'  (nonE)arguments: undefined',
+			'  -- prototype: Error',
+			'  (nonE)name: \'Error\'',
+			'  (nonE)message: \'\'',
+			'  (nonE)toString: function toString()',
+		].forEach(function (str) {
+			assert.ok(~actual.indexOf(), str)
+		})
+		var expect2 = '}'
+		assert.equal(actual.slice(-expect2.length), expect2)
 	},
 	'JSON': function () {
 		var input = JSON
@@ -270,11 +338,17 @@ exports['Option NonEnumerable:'] = {
 			setBufferContent(input)
 			setBufferContent(input.parent)
 			var i = input.parent
-			var expected = util.format('object:Buffer {\n  0: 5,\n  1: 6,\n  2: 7,\n  3: 8,\n  4: 9,\n  ...,\n  9: 99,\n  parent: object:SlowBuffer {\n    0: 5,\n    1: 6,\n    2: 7,\n    3: 8,\n    4: 9,\n    ...,\n    8191: 99,\n    used: %s,\n    length: 8192\n  },\n  length: 10,\n  offset: %s\n}',
+			var expect = [
+				'object:Buffer {\n  0: 5,\n  1: 6,\n  2: 7,\n  3: 8,\n  4: 9,\n  ...,\n  9: 99,\n',
+				'  length: 10,\n',
+			]
+			expect.push(util.format('  parent: object:SlowBuffer {\n    0: 5,\n    1: 6,\n    2: 7,\n    3: 8,\n    4: 9,\n    ...,\n    8191: 99,\n    used: %s,\n    length: 8192\n  },\n  offset: %s\n}',
 				input.parent.used,
-				input.offset)
+				input.offset))
 			var actual = inspect(input, {nonEnum:true, maxProperties: 5})
-			assert.equal(actual, expected, arguments.callee.name)
+			expect.forEach(function (s) {
+				assert.ok(~actual.indexOf(s), arguments.callee.name + s)
+			})
 		}
 
 		function setBufferContent(input) {

@@ -1,0 +1,32 @@
+2013-01-16 0.1.17 Changelog License test pass
+2013-01-12 0.1.16 q and qs functions, pargs with comma, p-ps use util.format, inspect of null prototype link
+2013-01-06 0.1.15 new functions: p pargs ps pp pps
+2012-12-29 0.1.14: createKey. removed cbCounter, jsonstore
+2012-12-25 0.1.13 p, ps: remove object from function name
+2012-12-25 0.1.12 p() and ps()
+2012-12-25 0.1.11 periodString, getLoc with argument
+2012-12-24 getLoc with string agrument, periodString
+2012-12-21 0.1.9 new function getISOPacific
+2012-12-21 0.1.8 getLoc
+2012-09-28 0.1.7 some more fileutils
+2012-09-09 0.1.6 getLocation takes Error/new Error in account
+2012-09-03 0.1.5 getJsonStore
+2012-09-03 0.1.3 getCbCounter takes opts argument
+2012-09-03 0.1.2 readme
+2012-09-03 0.1.1 added cbCounter example
+2012-09-03 0.1.0 added cbcounter, module refactor
+2012-09-03 0.0.13 inspect stack traces nicer
+2012-08-27 0.0.12 inspectAll robust
+2012-08-27 0.0.11 one new stack trace format
+2012-08-27 0.0.10 parseTrace implemented
+2012-08-26 0.0.9: array-style properties abbreviated, full function arg lists, test using mochawrapper
+2012-08-21 0.0.8 fixed missing var
+2012-08-19 0.0.7: inspect follows prototype chain, refactored testing, new readme
+2012-07-23     0.0.6: rewrote most code, got getType, packageTest implemented
+2012-04-23 0.0.5 author
+2012-04-14 package.json repository github
+2012-04-01 getLocation: works for emit callbacks, object only printed if it exist
+2011-10-14 toNumber stricter version of parseInt
+2011-10-03 getTimezoneOffset works and timeUtil
+2011-10-03 timestamp.js added
+2011-10-01 initial commit

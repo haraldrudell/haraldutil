@@ -1,8 +1,8 @@
 // test-fileutil.js
-// © Harald Rudell 2012
+// © Harald Rudell 2012 MIT License
 
 var fileutil = require('../lib/fileutil')
-var testedModule = fileutil
+
 // http://nodejs.org/docs/latest/api/fs.html
 var fs = require('fs')
 // http://nodejs.org/api/path.html
@@ -11,25 +11,11 @@ var path = require('path')
 // https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
 
-var exportsCount = 3
-var testedModuleType = 'object'
-var exportsTypes = {}
-
 var stsy = fs.statSync
 
 exports['FileUtil:'] = {
 	'Exports': function () {
-
-		// if export count changes, we need to write more tests
-		assert.equal(typeof testedModule, testedModuleType, 'Module type incorrect')
-		assert.equal(Object.keys(testedModule).length, exportsCount, 'Export count changed')
-
-		// all exports function
-		for (var exportName in testedModule) {
-			var actual = typeof testedModule[exportName]
-			var expected = exportsTypes[exportName] || 'function'
-			assert.equal(actual, expected, 'Incorrect type of export ' + exportName)
-		}
+		assert.exportsTest(fileutil, 3)
 	},
 	'GetHomeFolder': function () {
 		var expected = process.env[process.platform == 'win32' ?

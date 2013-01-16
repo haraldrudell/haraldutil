@@ -1,11 +1,15 @@
 // test-createkey.js
-// © Harald Rudell 2012
+// © Harald Rudell 2012 MIT License
 
 var createkey = require('../lib/createkey')
+
 // https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
 
 exports['Create Key:'] = {
+	'Exports': function () {
+		assert.exportsTest(createkey, 1)
+	},
 	'Same': function () {
 		var a1 = 'a'
 		var a2 = 'a'

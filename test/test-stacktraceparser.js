@@ -1,7 +1,9 @@
 // test-stacktraceparser.js
-// © Harald Rudell 2012
+// © Harald Rudell 2012 MIT License
 
 var stacktraceparser = require('../lib/stacktraceparser')
+
+// https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
 
 /*
@@ -27,6 +29,9 @@ in emit callback: /home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mo
 var frameLeadin = '\n\u0020\u0020\u0020\u0020at\u0020'
 
 exports['FrameTypes:'] = {
+	'Exports': function () {
+		assert.exportsTest(stacktraceparser, 1)
+	},
 	'Object.<anonymous> (folder/file:unknown)': function () {
 		var e = new Error
 		e.stack = 'x' + frameLeadin + 'Object.<anonymous> (/home/foxyboy/Desktop/c505/node/cloudclearing/mongoresearch/mongotest.js:10:2)'

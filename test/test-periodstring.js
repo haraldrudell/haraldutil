@@ -1,10 +1,11 @@
 // test-periodstring.js
-
-// © Harald Rudell 2012
+// © Harald Rudell 2012 MIT License
 
 var periodstring = require ('../lib/periodstring')
+
 // http://nodejs.org/api/path.html
 var path = require('path')
+
 // https://github.com/haraldrudell/mochawrapper
 var assert = require('mochawrapper')
 
@@ -14,6 +15,9 @@ var time1hour = 60 * time1minute
 var time1day = time1hour * 24
 
 exports['PeriodString:'] = {
+	'Exports': function () {
+		assert.exportsTest(periodstring, 1)
+	},
 	'values': function () {
 		var values = {
 			'0.000 s': 0.1,

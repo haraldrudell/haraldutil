@@ -1,13 +1,20 @@
 {
 	"name": "haraldutil",
-	"description": "Utility functions for date and logging by Harald Rudell",
+	"description": "App utility functions by Harald Rudell",
 	"author": "Harald Rudell <harald@allgoodapps.com> (http://www.haraldrudell.com)",
-	"version": "0.1.16",
+	"version": "0.1.17",
 	"keywords": [
 		"timestamp",
 		"error",
 		"inspect",
 		"file",
+		"stack",
+		"date",
+		"number",
+		"trace",
+		"stacktrace",
+		"util",
+		"utility",
 		"type"
 	],
 	"contributors": [
@@ -29,7 +36,8 @@
 		"test": "mocha --ui exports --reporter spec",
 		"monitor": "mocha --ui exports --reporter min --watch",
 		"debugtest": "mocha --debug-brk --ui exports --reporter spec",
-		"coverage": "mochacoverage"
+		"coverage": "mochacoverage",
+		"changelog": "git log --format=\"%ad %s\" --date=short >ChangeLog; ls -l ChangeLog"
 	},
 	"main": "./lib/haraldutil"
 }
