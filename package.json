@@ -2,7 +2,7 @@
 	"name": "haraldutil",
 	"description": "App utility functions by Harald Rudell",
 	"author": "Harald Rudell <harald@allgoodapps.com> (http://www.haraldrudell.com)",
-	"version": "0.1.17",
+	"version": "0.1.18",
 	"keywords": [
 		"timestamp",
 		"error",
@@ -25,7 +25,10 @@
 		}
 	],
 	"devDependencies": {
-		"mochawrapper": ""
+		"grunt-contrib-watch": ">= 0.1.4",
+		"grunts": ">= 0.0.1",
+		"grunt": ">= 0.4.0rc7",
+		"mochawrapper": ">= 0.0.34"
 	},
 	"dependencies": {},
 	"repository": {
