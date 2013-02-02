@@ -1,5 +1,5 @@
 // test-tonumber.js
-// © Harald Rudell 2012 MIT License
+// © 2012 Harald Rudell <harald@therudells.com> MIT License
 
 var tonumber = require('../lib/tonumber')
 

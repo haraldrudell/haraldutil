@@ -1,5 +1,5 @@
 // test-periodstring.js
-// © Harald Rudell 2012 MIT License
+// © 2012 Harald Rudell <harald@therudells.com> MIT License
 
 var periodstring = require ('../lib/periodstring')
 

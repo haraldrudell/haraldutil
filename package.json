@@ -30,7 +30,7 @@
 	"dependencies": {},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/haraldrudell/haraldutil"
+		"url": "https://github.com/haraldrudell/haraldutil.git"
 	},
 	"scripts": {
 		"test": "mocha --ui exports --reporter spec",

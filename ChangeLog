@@ -1,3 +1,4 @@
+2013-02-02 0.1.18 added cloner, refactored: browseTo, getType, getHomeFolder, usdaylight, timeutil, timestamp, timenumber
 2013-01-16 0.1.17 Changelog License test pass
 2013-01-12 0.1.16 q and qs functions, pargs with comma, p-ps use util.format, inspect of null prototype link
 2013-01-06 0.1.15 new functions: p pargs ps pp pps

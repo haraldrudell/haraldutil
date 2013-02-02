@@ -1,5 +1,5 @@
 // test-escapechar.js
-// © Harald Rudell 2011 MIT License
+// © 2011 Harald Rudell <harald@therudells.com> MIT License
 
 var escapechar = require('../lib/escapechar')
 

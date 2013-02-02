@@ -1,5 +1,5 @@
 // test-inspect.js
-// © Harald Rudell 2011 MIT License
+// © 2011 Harald Rudell <harald@therudells.com> MIT License
 
 var inspect = require('../lib/inspect').inspect
 var inspectAll = require('../lib/inspect').inspectAll
